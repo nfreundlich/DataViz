@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+   		<link rel="shortcut icon" href="favicon.ico">
+        <title>Title tititutu</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <link rel="stylesheet" href="static/css/bootstrap.min.css"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+        
+        <!-- Custom styles for this template -->
+    	<link href="static/css/sticky-footer-navbar.css" rel="stylesheet">
+        {% block css %}
+        {% endblock %}
+    </head>
+
+    <body>
+        <!--  <nav class="navbar navbar-full navbar-dark bg-inverse">-->
+        <nav class="navbar navbar-light" style="background-color: steelblue">
+          <a class="navbar-brand" href="{{ url_for('home') }}">OpsReports</a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('BudgetTool_Reports') }}">BudgetTool</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('CPOL_Reports') }}">CPOL</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('TSCAN_Reports') }}">T-SCAN</a></li>
+          </ul>
+        </nav>
+
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block body %}
+            {% endblock %}
+            
+        </div>
+        
+        <script src="static/js/jquery-2.2.3.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        {% block js %}
+        {% endblock %}
+    </body>
+    
+    <footer class="footer">
+     {% block footer %}
+        <div class="container">
+     		<p class="text-muted"></p>
+   		</div>
+     {% endblock %}
+     </footer>
+</html>

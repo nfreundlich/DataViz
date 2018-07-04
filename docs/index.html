@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<html>
+    <head>
+   		<link rel="shortcut icon" href="favicon.ico">
+			<link rel="stylesheet" href="styles/styles.css">
+
+        <title>DataViz Project</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Custom styles for this template -->
+    	<link href="static/css/sticky-footer-navbar.css" rel="stylesheet">
+    </head>
+
+<body>
+	<!--  <nav class="navbar navbar-full navbar-dark bg-inverse">-->
+        <nav class="navbar navbar-light" style="background-color: steelblue">
+          <a class="navbar-brand" href="index.html">Trail running analytics</a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="tests.html">Tests</a></li>
+            <li class="nav-item"><a class="nav-link" href="mytests.html">MyTests</a></li>
+            <li class="nav-item"><a class="nav-link" href="404">404</a></li>
+          </ul>
+        </nav>
+		Hi There!
+    <div id="svg-container">
+	    <svg id="viz" width="720" height="200">
+		    <div id = 'tooltip' opacity = 0></div>
+		    <!--  <rect width="300" height="100" fill="rgb(0,0,255)" /> -->
+		</svg>
+    </div>
+
+<script>
+
+
+// function loadRunnerData()
+// {
+// 	i = 0;
+// 	d3.csv("/data/run.csv", function(data) {
+// 		data.forEach(
+// 				function(d) {
+// 					//tampico[i] = 7;
+// 		  				console.log(i);
+// 		  				//tampico[i] = 9;
+// 		  				//console.log(tampico.length);
+// 		  				i = i + 1;
+
+// 					}
+// 				);
+// 		});
+
+// 	xx[i] = 1;
+// 	tampico[0] = 9;
+// 	i = i + 1;
+// 	xx[i] = 2;
+// 	tampico[1] = 10;
+// 	console.log(tampico);
+// 	//return 0
+// }
+
+// loadRunnerData();
+// //alert('tampuco:' + tampico);
+
+// console.log('tampico: ' + tampico);
+// //console.log(tampico);
+</script>
+
+<script>
+
+    var width = 720;
+    var height = 200;
+
+</script>
+
+<script>
+//Get the data
+
+</script>
+
+<script>
+var data =
+		[
+		    10,
+		    5,
+		    5,
+		    8,
+		    9,
+		    3,
+		    2,
+		];
+
+countTooltip = 0
+
+function updateViz(data)
+{
+  var nfr = d3.select("#viz").data(data);
+  var tooltip = d3.select("#tooltip");
+
+  //nfr.selectAll("rect").data(data).attr("fill", "steelblue ").attr("width",15).attr("height",function(d) { return 10*d;}).attr("x",function(d,i) { return 20*i; }).attr("y",function(d) { return (height / 2.0) - (d * 5.0); }).attr("tokenid", function(d,i){return (d * i) * 64});
+  nfr.selectAll("rect").data(data).enter().append("rect").attr("fill", "steelblue ").attr("width",15)
+  						.attr("height",function(d) { return 10*d;})
+  						.attr("x",function(d,i) { return 20*i; })
+  						.attr("y",function(d) { return (height / 2.0) - (d * 5.0); })
+  						.attr("tokenid", function(d,i){return (d * i) * 64})
+  						.on("mouseover",
+  								function(d,i){
+									tooltip
+										.style("opacity", 1)
+										.style("left", d3.event.pageX + "px")
+										.style("top", d3.event.pageY + "px")
+										.html("Id=" + i + "<br>Data=" + d);
+
+									countTooltip = countTooltip + 1
+									console.log("mouse in: " + countTooltip + " Id=" + i + " Data=" + d + " X: " + d3.event.pageX + " Y: " + d3.event.pageY);
+									})
+  						.on("mouseout",
+  								function(){tooltip.style("opacity", 0); console.log("mouse out: " + countTooltip);});
+  nfr.selectAll("rect").data(data).exit().remove();
+
+  //nfr.selectAll("rect").data(data).on("mouseover",
+//		  function(d,i){
+//				tooltip.html("mouse over graph");
+//				console.log("mouse over graph");
+//				});
+}
+</script>
+
+<script>
+updateViz(data)
+</script>
+
+<!-- TOOLTIP -->
+<script>
+	d3.selectAll("rect").data(data).enter().on("mouseover", function(d,i){
+		tooltip.style("opacity", 1)
+				.html("Hello")
+	});
+</script>
+
+
+
+</body>
+
+</html>
