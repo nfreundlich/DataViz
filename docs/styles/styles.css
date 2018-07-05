@@ -24,6 +24,22 @@ path {
 	shape-rendering: crispEdges;
 }
 
-#recty {
-	fill: steelblue;
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+.axis .domain {
+  display: none;
+}
+
+.rect:hover {
+  fill: brown;
 }
