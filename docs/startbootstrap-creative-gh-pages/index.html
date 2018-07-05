@@ -23,7 +23,6 @@
 
     <!-- Custom styles for this template -->
     <link href="css/creative.min.css" rel="stylesheet">
-
   </head>
 
   <body id="page-top">
@@ -99,7 +98,13 @@
       </div>
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-6 text-center">
+          <div class="col-lg-auto col-md text-center">
+          <svg id="nfr_occ_02" width="960" height="500" > <!--style="width:100%;height:100%;position:fixed;top:0;left:0;bottom:0;right:0;">
+          <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
+          </svg>
+          </div>
+
+          <!-- <div class="col-lg-3 col-md-6 text-center">
             <div class="service-box mt-5 mx-auto">
               <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
               <h3 class="mb-3">Sturdy Templates</h3>
@@ -126,7 +131,7 @@
               <h3 class="mb-3">Made with Love</h3>
               <p class="text-muted mb-0">You have to make your websites with love these days!</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -139,11 +144,17 @@
             <h2 class="section-heading text-white">We've got what you need!</h2>
             <hr class="light my-4">
             <p class="text-faded mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+            <!-- define the graph layout-->
+            <!-- <svg id="nfr_occ_01" width="100%" height="65%"> -->
+              <svg id="nfr_occ_01" width="730" height="260">
+              <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
+            </svg>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#download">Get Started 2!</a>
           </div>
         </div>
       </div>
     </section>
+    <!-- End of section added by me! -->
 
     <!-- Download section -->
     <section id="download" class="bg-dark text-white">
@@ -188,6 +199,19 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
+
+    <!-- load the d3.js and jquery library -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- NFR: D3 graph scripts -->
+    <script src="../scripts/run_03.js"></script>
+    <script>occ_graph();</script>
+    <script>
+        var mysvg = document.getElementById('nfr_occ_02');
+        console.log(mysvg.width)
+        console.log(mysvg.height)
+    </script>
 
   </body>
 
