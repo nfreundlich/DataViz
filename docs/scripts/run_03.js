@@ -17,6 +17,7 @@ function occ_graph()
   var z = d3.scaleOrdinal()
       .range(["#98abc5", "#ff8c00"]);//"#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
+  //multi stack possible!
   d3.csv("/data/ut4m_2017_mw.csv", function(d, i, columns) { //d3_stacked_data.csv
     for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
     d.totalnfr = t;
@@ -32,18 +33,24 @@ function occ_graph()
     z.domain(keys);
 
     g.append("g")
+      //SOME TRANSFORM ???
       .selectAll("g")
+      //ASSIGNING DATA 2 TIMES???
       .data(d3.stack().keys(keys)(data))
       .enter().append("g")
         .attr("fill", function(d) { return z(d.key); })
       .selectAll("rect")
+      //ASSIGN REAL DATA????
       .data(function(d) { return d; })
+      //ENTER
       .enter().append("rect")
         .attr("x", function(d) { return x(d.data.TimeBin); })
         .attr("y", function(d) { return y(d[1]); })
         .attr("height", function(d) { return y(d[0]) - y(d[1]); })
         .attr("width", x.bandwidth());
 
+
+//AXIS and LEGENDS
     g.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(0," + height + ")")

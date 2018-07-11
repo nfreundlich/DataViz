@@ -6,9 +6,9 @@
 
 var flag = 0; //0,1,2 == Total, Men, Women
 
-var margin = { left:100, right:10, top:10, bottom:160 };
+var margin = { left:80, right:10, top:60, bottom:160 };
 
-var width = 800 - margin.left - margin.right,
+var width = 980 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 var g = d3.select("#chart-area")
@@ -26,16 +26,24 @@ var labelX = g.append("text")
 	.attr("y", height + 80)
 	.attr("font-size", "20px")
     .attr("text-anchor", "middle")
-	.text("TimeBin");
+	.text("Time (15' intervals)");
 
 // label Y
 var labelY = g.append("text")
 	.attr("class", "y axis-label")
     .attr("x", - (height / 2))
-    .attr("y", -60)
+    .attr("y", -40)
 	.attr("font-size", "20px")
 	.attr("text-anchor", "middle")
 	.attr("transform", "rotate(-90)");
+
+var title = g.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 0 - (margin.top / 2))
+          .attr("text-anchor", "middle")
+          .style("font-size", "20px")
+          .style("text-decoration", "underline")
+          .text("OCC 2017 Running time");
 
 // x scale
 var x = d3.scaleBand()
@@ -58,7 +66,10 @@ var yAxisGroup = g.append("g")
 
 // read data: Total,TimeBin,Women,Men
 d3.csv("../data/ut4m_2017_mw.csv").then(function(data){
+    var keys = data.columns.slice(2); //Men + Women columns
+
     console.log(data);
+    console.log(d3.stack().keys(keys)(data));
 
     // transform string data to integer
     data.forEach(function(d){
@@ -67,12 +78,14 @@ d3.csv("../data/ut4m_2017_mw.csv").then(function(data){
         d.Women = +d.Women;
     });
 
-	d3.interval(function(){
-		//var newData = flag ? data : data.slice(1);
-		update(data);
-		flag += 1;
-    if(flag > 2) {flag = 0;};
-	}, 1000);
+    if(false){
+    	d3.interval(function(){
+    		//var newData = flag ? data : data.slice(1);
+    		update(data);
+    		flag += 1;
+        if(flag > 2) {flag = 0;};
+    	}, 1000);
+    }
 
 	update(data);
 }).catch(function(error){
@@ -80,6 +93,8 @@ d3.csv("../data/ut4m_2017_mw.csv").then(function(data){
 });
 
 function update(data){
+  var keys = data.columns.slice(2); //Men + Women columns
+
   var value;
   switch(flag) {
     case 1:
@@ -99,7 +114,10 @@ function update(data){
 	// y scale domain update
 	y.domain([0, d3.max(data, function(d){return d[value];})]);
 
-    // color scale (optional and useless from data pov)
+  // useful ordinal color scale
+  var colorScale = d3.scaleOrdinal(d3["schemePaired"]);
+
+  // color scale (optional and useless from data pov)
 	var yCol = d3.scaleSequential()
 		.domain([0, d3.max(data, function(d){
             return d[value];
@@ -132,10 +150,29 @@ function update(data){
 	var t = d3.transition().duration(250);
 
     // JOIN new data with old elements.
-    var rects = g.selectAll("rect")
-        .data(data, function(d){
-        	return d.TimeBin;
-        });
+    // REDOX - why is this not working?
+    // var rects = g.selectAll("rect")
+    //     .data(data, function(d){
+    //     	return d.TimeBin;
+    //     });
+    var rects = g;
+
+    //---->>>TOOLTIP
+      var tip = d3.tip().attr("class", "d3-tip")
+            .html(function(d){
+              console.log(d);
+              console.log(d.data);
+              console.log(d.data.TimeBin);
+              console.log(d.data.Men);
+              var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
+              text += "Women: " + d.data.Women + "<br>";
+              text += "Men: " + d.data.Men + "<br></span>";
+              return text;
+            });
+
+      rects.call(tip);
+
+    //<<-----TOOLTIP
 
     // EXIT old elements not present in new data.
     rects.exit()
@@ -145,21 +182,70 @@ function update(data){
         .attr("height", 0)
         .remove();
 
+    // ORIGINAL STUFF W/ PRETTY UPDATE PATTERN!!! REDOX!!!
     // ENTER new elements present in new data...
-    rects.enter()
-        .append("rect")
-            .attr("fill", function(d){return yColWarm(d[value])})
-            .attr("y", y(0))
-            .attr("height", 0)
-            .attr("x", function(d){ return x(d.TimeBin) })
-            .attr("width", x.bandwidth)
-            // AND UPDATE old elements present in new data.
-            .merge(rects)
-            .transition(t)
-                .attr("x", function(d){ return x(d.TimeBin) })
-                .attr("width", x.bandwidth)
-                .attr("y", function(d){ return y(d[value]); })
-                .attr("height", function(d){ return height - y(d[value]); })
-                .attr("fill", function(d){return yColWarm(d[value])});
+    // rects
+    //   .enter()
+    //     .append("rect")
+    //         .attr("fill", function(d){return yColWarm(d[value])})
+    //         .attr("y", y(0))
+    //         .attr("height", 0)
+    //         .attr("x", function(d){ return x(d.TimeBin) })
+    //         .attr("width", x.bandwidth)
+    //         // AND UPDATE old elements present in new data.
+    //         .merge(rects)
+    //         .transition(t)
+    //             .attr("x", function(d){ return x(d.TimeBin) })
+    //             .attr("width", x.bandwidth)
+    //             .attr("y", function(d){ return y(d[value]); })
+    //             .attr("height", function(d){ return height - y(d[value]); })
+    //             .attr("fill", function(d){return yColWarm(d[value])});
 
+//------->>>TO BE DELETED AND/OR REWORKED!!!
+      rects.append("g")
+        .selectAll("g")
+          //MANAGE STACKING
+        .data(d3.stack().keys(keys)(data))
+        .enter().append("g")
+          .attr("fill", function(d) { return colorScale(d.key); })
+        .selectAll("rect")
+        .data(function(d) { return d; })
+        .enter().append("rect")
+          .on("mouseover", tip.show)
+          .on("mouseout", tip.hide)
+          //setup transition
+          .attr("y", y(0))
+          .attr("height", 0)
+          .attr("x", function(d){ return x(d.data.TimeBin) })
+          .attr("width", x.bandwidth)
+          //start transition
+          .transition(t)
+            .attr("x", function(d) { return x(d.data.TimeBin); })
+            .attr("y", function(d) { return y(d[1]); })
+            .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+            .attr("width", x.bandwidth());
+//<<-----TO BE DELETED
+
+//--->LEGENDS
+var legend = rects.append("g")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+    .attr("text-anchor", "end")
+  .selectAll("g")
+  .data(keys.slice().reverse())
+  .enter().append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+legend.append("rect")
+    .attr("x", width - 19)
+    .attr("width", 19)
+    .attr("height", 19)
+    .attr("fill", colorScale);
+
+legend.append("text")
+    .attr("x", width - 24)
+    .attr("y", 9.5)
+    .attr("dy", "0.32em")
+    .text(function(d) { return d; });
+//<<----LEGENDS
 };
