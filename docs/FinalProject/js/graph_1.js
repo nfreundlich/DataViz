@@ -24,7 +24,7 @@ var labelX = g.append("text")
 	.attr("class", "x axis-label")
 	.attr("x", width / 2)
 	.attr("y", height + 80)
-	.attr("font-size", "20px")
+	.attr("font-size", "14px")
     .attr("text-anchor", "middle")
 	.text("Time (15' intervals)");
 
@@ -33,15 +33,16 @@ var labelY = g.append("text")
 	.attr("class", "y axis-label")
     .attr("x", - (height / 2))
     .attr("y", -40)
-	.attr("font-size", "20px")
+	.attr("font-size", "14px")
 	.attr("text-anchor", "middle")
 	.attr("transform", "rotate(-90)");
 
+// graph title
 var title = g.append("text")
           .attr("x", (width / 2))
           .attr("y", 0 - (margin.top / 2))
           .attr("text-anchor", "middle")
-          .style("font-size", "20px")
+          .style("font-size", "18px")
           .style("text-decoration", "underline")
           .text("OCC 2017 Running time");
 
@@ -65,17 +66,19 @@ var yAxisGroup = g.append("g")
 	.attr("class", "y-axis");
 
 // read data: Total,TimeBin,Women,Men
-d3.csv("../data/ut4m_2017_mw.csv").then(function(data){
-    var keys = data.columns.slice(2); //Men + Women columns
+d3.csv("../data/ut4m_2017_hist_detailed_cats.csv").then(function(data){
+    var keys = data.columns.slice(4); //Men + Women columns
 
     console.log(data);
     console.log(d3.stack().keys(keys)(data));
 
     // transform string data to integer
-    data.forEach(function(d){
+    data.forEach(function(d, i, columns){
+        for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
         d.Total = +d.Total;
-        d.Men = +d.Men;
-        d.Women = +d.Women;
+        // d.Men = +d.Men;
+        // d.Women = +d.Women;
+        // d.GrandTotal = d.Men + d.Women + d.Rabbits;
     });
 
     if(false){
@@ -93,7 +96,7 @@ d3.csv("../data/ut4m_2017_mw.csv").then(function(data){
 });
 
 function update(data){
-  var keys = data.columns.slice(2); //Men + Women columns
+  var keys = data.columns.slice(4); //Men + Women columns
 
   var value;
   switch(flag) {
@@ -112,21 +115,23 @@ function update(data){
 	x.domain(data.map(function(d){ return d.TimeBin; }));
 
 	// y scale domain update
-	y.domain([0, d3.max(data, function(d){return d[value];})]);
+	y.domain([0, d3.max(data, function(d){return d["Total"];})]).nice();
 
   // useful ordinal color scale
-  var colorScale = d3.scaleOrdinal(d3["schemePaired"]);
+  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]);
 
   // color scale (optional and useless from data pov)
-	var yCol = d3.scaleSequential()
+	var yColorInterpolateRainbow = d3.scaleSequential()
 		.domain([0, d3.max(data, function(d){
-            return d[value];
+            return d["Total"];
         })])
 		.interpolator(d3.interpolateRainbow);
-	var yColWarm = d3.scaleSequential()
-		.domain([0, d3.max(data, function(d){return d[value];})])
-		.interpolator(d3.interpolateWarm);
+	var yColorInterpolateWarm = d3.scaleSequential()
+		.domain([0, d3.max(data, function(d){return d["Total"];})])
+		.interpolator(d3.interpolateRainbow);
+  // end of useless color scales, play with this later maybe
 
+  var colorScale = yColorOrdinal;
 
 	var xAxisCall = d3.axisBottom(x);
 	xAxisGroup.call(xAxisCall)
@@ -143,7 +148,7 @@ function update(data){
 	yAxisGroup.call(yAxisCall);
 
 	// update label
-  var labelYText = value;
+  var labelYText = "Number of runners";
 	labelY.text(labelYText)
 
 	// declare transition
@@ -232,7 +237,7 @@ var legend = rects.append("g")
     .attr("font-size", 10)
     .attr("text-anchor", "end")
   .selectAll("g")
-  .data(keys.slice().reverse())
+  .data(keys.slice()) //.reverse() if you wish
   .enter().append("g")
     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 

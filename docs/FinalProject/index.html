@@ -16,16 +16,51 @@
 
     <nav class="navbar navbar-default">
         <div class="container">
-            <a class="navbar-nav" href="#">OCC & UT4M
-              <!-- <img id="logo" src="img/logo.pngx"> -->
-            </a>
+          <a class="navbar-text" href="index.html">Start</a>
+          <a class="navbar-text" href="graph_1.html">OCC 2017</a>
+          <a class="navbar-text" href="graph_2.html">OCC vs UT4M</a>
         </div>
     </nav>
 
     <!-- Bootstrap grid setup -->
     <div class="container">
         <div class="row">
-            <div id="chart-area"></div>
+            <div id="description-area">
+              Analysis of OCC trail running competition (part of UTMB @ Chamonix).
+              <br>
+              Questions:
+              A) What are the average times for completing the OCC? How do they vary based on gender, age, edition?
+              A') How did the average running times evolve for OCC between 2014-2017?
+              B) How do the mean times from OCC compare to a similar cathegory trail (UT4M Chartreuse 2017)?
+              <br>
+              Data sources:
+              - UT4M: https://ut4m.fr/fr/courses/resultats and UTMB/OCC:  http://utmbmontblanc.com/en/page/107/107.html
+              <br>
+              Data prep:
+              - Cleaned and concatenated the yearly results; python to clean data formatting issues
+              <br>
+              The graphs and their interpretation
+              - Remarks: filters on the right side of the dashboard may be applied for investigation, for all graphs; exact values are presented in the 'Tooltips'
+              <br>
+              A) OCC 2014 - 2017 Analysis (histogram)
+              - X axis - duration of the run (15' bins) / Y axis - number of runners in the interval
+              - Color coding: a main color palette (green/yellow) to highlight the difference between male/female atheletes; secondary color palette (shades ) is used to highlight various age cathegories
+              -  Analysis: consistently more male runners than female runners; male running time is slightly faster than female running time (appx 30' )
+              <br>
+              A') OCC 2014 - 2017 Average running time evolution
+              - X Axis: years from 2014 - 2017 / Y Axis: average running time in minutes
+              - Remark: I chose a line graph for this discreet measure to suggest the evolution of the averages, in a 'trend line' approach
+              - Analysis: an interesting discovery - the average run times considering all runner cathegories, vary only by 3 min (0.5%) in four years.
+              <br>
+              B) OCC vs UT4M comparison (histogram)
+              - X & Y axis: similar to A) graph
+              - Color coding: a main color palette (blue/orange) for differentiating between OCC/UT4M; secondary color palette (shades) for less important differentiation btw cathegories
+              - Analysis: OCC presents a significanlty higher effort than UT4M (a difference of appx 3h on average)
+              <br>
+              Conclusion
+              - This analysis might be useful to evaluate one's expected completion time in a specific competition based on previous experiences (ex in our case: expected OCC  after  UT4M)
+              - Further investigation might be possible - adding other competitions to the comparison, considering specific distances, elevation gains, terrain etc.
+            </div>
         </div>
     </div>
 
@@ -35,7 +70,8 @@
 <script src="js/d3.min.js"></script>
 <script src="js/d3-tip.js"></script>
 <!-- Custom JS -->
-<script src="js/graph_1.js"></script>
+
+<!-- <script src="js/graph_1.js"></script> -->
 <!-- <script src="js/graph_2.js"></script> -->
 
 </body>
