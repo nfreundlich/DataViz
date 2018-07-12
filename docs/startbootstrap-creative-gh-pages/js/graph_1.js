@@ -11,8 +11,13 @@ var flag = 0; //0,1,2 == Total, Men, Women
 
 var margin = { left:80, right:10, top:60, bottom:160 };
 
-var width = 960 - margin.left - margin.right,
-    height = 480 - margin.top - margin.bottom;
+var height_test = parseInt(d3.select("#chart-area-1").style("height"), 10),
+    width_test = parseInt(d3.select("#chart-area-1").style("width"), 10);
+
+console.log("Test height and width: " + (height_test) + ", " + width_test);
+
+var width = width_test - margin.left - margin.right,//960 - margin.left - margin.right,
+    height = width_test / 2 - margin.top - margin.bottom;//480 - margin.top - margin.bottom;
 
 var g_graph_1 = d3.select("#chart-area-1")
     .append("svg")
