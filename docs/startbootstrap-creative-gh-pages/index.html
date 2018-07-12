@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Trailrunning</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +23,9 @@
 
     <!-- Custom styles for this template -->
     <link href="css/creative.min.css" rel="stylesheet">
+
+    <!-- D3 Tooltip CSS -->
+    <link rel="stylesheet" href="css/d3-tip.css">
   </head>
 
   <body id="page-top">
@@ -30,167 +33,143 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+              <a class="nav-link js-scroll-trigger" href="#thestory">The Story</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+              <a class="nav-link js-scroll-trigger" href="#occ">OCC</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+              <a class="nav-link js-scroll-trigger" href="#comparison">Comparison</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+              <a class="nav-link js-scroll-trigger" href="#conclusion">Conclusion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#references">References</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Intro section -->
+    <!-- intro section -->
     <header class="masthead text-center text-white d-flex">
       <div class="container my-auto">
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
-              <strong>Analyzing OCC & UT4M Trail Running Competitions</strong>
+              <strong>Analyzing OCC Trail Running Competition</strong>
             </h1>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5">Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-            <!-- <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a> -->
-            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+            <p class="text-faded mb-5">We'll be analyzing in detail the OCC trail running competition finsher times, then compare its difficulty with other similar competitions.</p>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#thestory">Check the Story</a>
           </div>
         </div>
       </div>
     </header>
+    <!-- end of intro section -->
 
-    <!-- Description section -->
-    <section class="bg-primary" id="about">
+    <!-- thestory section -->
+    <section class="bg-primary" id="thestory">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12 mx-auto text-center">
-            <h2 class="section-heading text-white">We've got what you need!</h2>
-            <svg id="nfr_occ_02" width="960" height="500" > <!--style="width:100%;height:100%;position:fixed;top:0;left:0;bottom:0;right:0;">
-            <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
-            </svg>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
+          <div class="col-lg-10 mx-auto text-center">
+            <h2 class="section-heading text-white">The Story</h2>
+            <p class="text-faded mb-5" style="text-align:left; font-size:11px;">
+              <br />
+              - What are the average times for completing the OCC? How do they vary based on gender, age, edition?<br /> - How did the average running times evolve for OCC between 2014-2017?<br />
+              - How do the mean times from OCC compare to a similar cathegory trail (UT4M Chartreuse 2017)?<br /><br /> <br /> The graphs and their interpretation<br /> <strong>A) OCC 2014 - 2017 Analysis (histogram)</strong><br />
+              - X axis - duration of the run (15' bins) / Y axis - number of runners in the interval<br /> - Color coding: a main color palette (green/yellow) to highlight the difference between male/female atheletes; secondary color palette (shades ) is used to highlight various age cathegories<br /> - Analysis: consistently more male runners than female runners; male running time is slightly faster than female running time (appx 30' )<br /><br /><strong> A') OCC 2014 - 2017 Average running time evolution</strong><br /> - X Axis: years from 2014 - 2017 / Y Axis: average running time in minutes<br /> - Remark: I chose a line graph for this discreet measure to suggest the evolution of the averages, in a 'trend line' approach<br /> - Analysis: an interesting discovery - the average run times considering all runner cathegories, vary only by 3 min (0.5%) in four years.<br /><br /> <strong>B) OCC vs UT4M comparison (histogram)</strong><br /> - X &amp; Y axis: similar to A) graph<br /> - Color coding: a main color palette (blue/orange) for differentiating between OCC/UT4M; secondary color palette (shades) for less important differentiation btw cathegories<br />
+              - Analysis: OCC presents a significanlty higher effort than UT4M (a difference of appx 3h on average)<br /><br />
+            </p>
+            <a class="btn btn-light btn-xl js-scroll-trigger" href="#occ">Continue to OCC</a>
           </div>
         </div>
       </div>
     </section>
+    <!-- end of thestory section -->
 
-    <!-- No button section -->
-    <section id="services">
+    <!-- occ section -->
+    <section id="occ">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">At Your Service</h2>
-            <svg id="nfr_occ_02" width="960" height="500" > <!--style="width:100%;height:100%;position:fixed;top:0;left:0;bottom:0;right:0;">
-            <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
-            </svg>
+            <h4 class="section-heading">OCC Analysis</h4>
+            <!-- OCC Graph -->
+            <svg id="chart-area-1" width="960" height="480" ></svg>
+            <a class="btn btn-light btn-xl js-scroll-trigger" href="#comparison">Continue to comparison</a>
             <hr class="my-4">
           </div>
         </div>
       </div>
+    </section>
+    <!-- end of occ section -->
+
+    <!-- trail run comparison section -->
+    <section id="comparison">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12 col-md text-center">
-          <svg id="nfr_occ_02" width="960" height="500" > <!--style="width:100%;height:100%;position:fixed;top:0;left:0;bottom:0;right:0;">
-          <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
-          </svg>
+          <div class="col-lg-12 text-center">
+            <h5 class="section-heading">Comparison OCC - UT4M</h5>
+            <!-- OCC Graph -->
+            <svg id="chart-area-2" width="960" height="480" ></svg>
+            <a class="btn btn-light btn-xl js-scroll-trigger" href="#conclusion">Conclusion</a>
+            <hr class="my-4">
           </div>
-
-          <!-- <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Sturdy Templates</h3>
-              <p class="text-muted mb-0">Our templates are updated regularly so they don't break.</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Ready to Ship</h3>
-              <p class="text-muted mb-0">You can use this theme as is, or you can make changes!</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Up to Date</h3>
-              <p class="text-muted mb-0">We update dependencies to keep things fresh.</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">Made with Love</h3>
-              <p class="text-muted mb-0">You have to make your websites with love these days!</p>
-            </div>
-          </div> -->
         </div>
       </div>
     </section>
+    <!-- end of trail run comparison section -->
 
-    <!-- Description section Added by NFR-->
-    <section class="bg-primary" id="about_nfr">
+    <!-- conclusion section-->
+    <section class="bg-primary" id="conclusion">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">We've got what you need!</h2>
+            <h2 class="section-heading text-white">Conclusion</h2>
             <hr class="light my-4">
-            <p class="text-faded mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-            <!-- define the graph layout-->
-            <!-- <svg id="nfr_occ_01" width="100%" height="65%"> -->
-              <svg id="nfr_occ_01" width="730" height="260">
-              <!-- <rect width="960" height="500" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> -->
-            </svg>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#download">Get Started 2!</a>
+            <p class="text-faded mb-4" style="text-align:left; font-size:12px;">
+              - This analysis might be useful to evaluate one's expected completion time in a specific competition based on previous experiences (ex in our case: expected OCC after UT4M)<br />
+              - Further investigation might be possible - adding other competitions to the comparison, considering specific distances, elevation gains, terrain etc. <br />
+              - Some more text <br />
+              - Some more text <br />
+              - Some more text <br />
+              - Some more text <br />
+              - Some more text <br />
+              - Some more text <br />
+              - Some more text <br />
+            </p>
+            <a class="btn btn-light btn-xl js-scroll-trigger" href="#references">References</a>
           </div>
         </div>
       </div>
     </section>
-    <!-- End of section added by me! -->
+    <!-- end of conclusion section -->
 
-    <!-- Download section -->
-    <section id="download" class="bg-dark text-white">
-      <div class="container text-center">
-        <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-        <a class="btn btn-light btn-xl sr-button" href="http://startbootstrap.com/template-overviews/creative/">Download Now!</a>
-      </div>
-    </section>
-
-    <section id="contact">
+    <!-- references section -->
+    <section id="references">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Let's Get In Touch!</h2>
+            <h2 class="section-heading">References and technical details</h2>
             <hr class="my-4">
-            <p class="mb-5">Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
-            <p>123-456-6789</p>
-          </div>
-          <div class="col-lg-4 mr-auto text-center">
-            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-            <p>
-              <a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a>
+            <p class="mb-5" style="text-align:left; font-size:12px;">
+              <em>Data sources:</em><br /><em> - UT4M: https://ut4m.fr/fr/courses/resultats and UTMB/OCC: http://utmbmontblanc.com/en/page/107/107.html</em><br /><br /><em> Data prep:</em><br /><em> - Cleaned and concatenated the yearly results; python to clean data formatting issues</em><br />
             </p>
           </div>
         </div>
       </div>
     </section>
+    <!-- end of references section -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -204,18 +183,17 @@
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
 
-    <!-- load the d3.js and jquery library -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Load the d3.js and jquery library -->
+    <script src="js/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-    <!-- NFR: D3 graph scripts -->
-    <script src="../scripts/run_03.js"></script>
-    <script>occ_graph();</script>
-    <script>
-        var mysvg = document.getElementById('nfr_occ_02');
-        console.log(mysvg.width)
-        console.log(mysvg.height)
-    </script>
+    <!-- Additional d3 libraries -->
+    <script src="js/d3-tip.js"></script>
+
+    <!-- Graphs -->
+    <script src="js/graph_1.js"></script>
+    <script src="js/graph_2.js"></script>
+    <script>graph_2();</script>
 
   </body>
 
