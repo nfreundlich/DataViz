@@ -18,7 +18,7 @@ function occ_graph()
       .range(["#98abc5", "#ff8c00"]);//"#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
   //multi stack possible!
-  d3.csv("/data/ut4m_2017_mw.csv", function(d, i, columns) { //d3_stacked_data.csv
+  d3.csv("./data/ut4m_2017_mw.csv", function(d, i, columns) { //d3_stacked_data.csv
     for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
     d.totalnfr = t;
     return d;
