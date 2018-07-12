@@ -1,6 +1,6 @@
 function occ_graph()
 {
-  var svg = d3.select("#nfr_occ_02"),
+  var svg = d3.selectAll("#nfr_occ_02"),
       margin = {top: 20, right: 20, bottom: 60, left: 40},
       width = +svg.attr("width") - margin.left - margin.right,
       height = +svg.attr("height") - margin.top - margin.bottom,
