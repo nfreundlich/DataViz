@@ -2,7 +2,7 @@
   line-height: 1;
   font-weight: normal;
   padding: 4px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(158,154,200, 0.8); /*rgba(0, 0, 0, 0.8);*/
   color: #fff;
   border-radius: 2px;
   pointer-events: none;
