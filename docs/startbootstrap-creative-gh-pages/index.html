@@ -103,14 +103,32 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h4 class="section-heading">OCC Analysis</h4>
+            <h4 class="section-heading">OCC Finisher times</h4>
           </div>
+
+          <!--  Chart control -->
+          <div class="col-md-1" text-center>
+                <button id="play-button-graph-1" class="btn btn-secondary">Play</button>
+          </div>
+
+          <div class="col-md-2">
+                <select id="year-select" class="form-control">
+                    <option selected value="all">All</option>
+                    <option value="y2014">2014</option>
+                    <option value="y2015">2015</option>
+                    <option value="y2016">2016</option>
+                    <option value="y2017">2017</option>
+                </select>
+            </div>
+
+          <!-- End of chart control -->
+
           <div class="col-lg-12 text-center" id="chart-area-1">
             <!-- <div id="chart-area-1"></div> -->
           </div>
 
           <div class="col-lg-12 text-center">
-            <!-- OCC Graph -->
+            <!-- OCC Finisher times -->
                <!-- <svg width="960" height="480" ></svg> -->
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#comparison">Continue to comparison</a>
             <hr class="my-4">
@@ -126,8 +144,17 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h5 class="section-heading">Comparison OCC - UT4M</h5>
-            <!-- OCC Graph -->
-            <svg id="chart-area-2" width="960" height="480" ></svg>
+            <!-- Chart controls -->
+            <div class="col-md-1" text-center>
+                  <button id="play-button-graph-2" class="btn btn-secondary">Play</button>
+            </div>
+            <!-- End of chart controls -->
+            <!-- OCC UT4M Comparison -->
+            <div class="col-lg-12 text-center" id="chart-area-2">
+              <!-- <div id="chart-area-1"></div> -->
+              <!-- <svg id="chart-area-2" width="960" height="480" ></svg> -->
+            </div>
+
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#conclusion">Conclusion</a>
             <hr class="my-4">
           </div>

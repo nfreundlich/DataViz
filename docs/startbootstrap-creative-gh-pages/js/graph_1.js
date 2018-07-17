@@ -1,13 +1,17 @@
 /*
-*    main.js
-*    Mastering Data Visualization with D3.js
-*    Project 1 - Star Break Coffee
+*    graph_1.js
+*    OCC 2014 - 2017
 */
 
-
-console.log("in script!!!");
-
-var flag = 0; //0,1,2 == Total, Men, Women
+var g1_params = { labelX:'',
+                  labelY:'',
+                  labelYText:'',
+                  x:'',
+                  y:'',
+                  xAxisGroup:'',
+                  yAxisGroup:'',
+                  g:'',
+                  data:''};
 
 var margin = { left:80, right:10, top:60, bottom:160 };
 
@@ -65,10 +69,11 @@ var yAxisGroup = g_graph_1.append("g")
 	.attr("class", "y-axis");
 
 // read data: Total,TimeBin,Women,Men
+//TODO: create a function for this with param for data
 d3.csv("../data/ut4m_2017_hist_detailed_cats.csv").then(function(data){
     var keys = data.columns.slice(4); //Men + Women columns
 
-    console.log("i have read the data");
+    console.log("i have read the data - occ 2017");
     console.log(data);
     console.log(d3.stack().keys(keys)(data));
 
@@ -78,19 +83,38 @@ d3.csv("../data/ut4m_2017_hist_detailed_cats.csv").then(function(data){
         d.Total = +d.Total;
     });
 
-    console.log("do some stuff");
+    g1_params.data = data;
 
-    console.log("before update data");
 	  update_graph1(data);
-    console.log("after update data");
+
 }).catch(function(error){
 	console.log(error)
 });
 
-function toto(data)
-{
-  console.log("titi");
-};
+$("#play-button-graph-1")
+  .on("click", function(){
+    alert("gonna change the data");
+
+    //TODO --- TOTAL REDOXXXXX // TODO:
+    d3.csv("../data/ut4m_2014_hist_detailed_cats_fake.csv").then(function(data){
+        var keys = data.columns.slice(4); //Men + Women columns
+
+        console.log("i have read the data - occ 2014!!!");
+        console.log(data);
+        console.log(d3.stack().keys(keys)(data));
+
+        // transform string data to integer
+        data.forEach(function(d, i, columns){
+            for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+            d.Total = +d.Total;
+        });
+
+        g1_params.data = data;
+      });
+
+
+  });
+
 
 function update_graph1(data){
   console.log("in update data");

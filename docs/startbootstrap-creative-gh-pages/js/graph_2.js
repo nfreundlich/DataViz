@@ -4,13 +4,30 @@
 *    Project 1 - Star Break Coffee
 */
 var flag = 0; //0,1,2 == Total, Men, Women
-// var margin = { left:100, right:10, top:10, bottom:160 };
-// var width = 800 - margin.left - margin.right,
-//     height = 500 - margin.top - margin.bottom;
+var g2_params = { labelX:'',
+                  labelY:'',
+                  labelYText:'',
+                  x:'',
+                  y:'',
+                  xAxisGroup:'',
+                  yAxisGroup:'',
+                  g:'',
+                  data:''};
+
+var interval_graph_2;
 
 var margin = { left:80, right:10, top:60, bottom:160 };
-var width = 960 - margin.left - margin.right,
-        height = 480 - margin.top - margin.bottom;
+
+var height_test_2 = parseInt(d3.select("#chart-area-1").style("height"), 10),
+    width_test_2 = parseInt(d3.select("#chart-area-1").style("width"), 10);
+
+console.log("Test height and width: " + (height_test) + ", " + width_test);
+
+var width = width_test_2 - margin.left - margin.right,//960 - margin.left - margin.right,
+    height = 480 - margin.top - margin.bottom;//480 - margin.top - margin.bottom;
+
+// Globals for Chart 2
+
 
 function graph_2(){
   var g = d3.select("#chart-area-2")
@@ -69,18 +86,46 @@ function graph_2(){
           d.Women = +d.Women;
       });
 
-  	d3.interval(function(){
-  		//var newData = flag ? data : data.slice(1);
-  		update(data, g, x, y, xAxisGroup, yAxisGroup, labelX, labelY);
-  		flag += 1;
-      if(flag > 2) {flag = 0;};
-  	}, 1000);
+    g2_params.data = data;
+    g2_params.g = g;
+    g2_params.x = x;
+    g2_params.y = y;
+    g2_params.xAxisGroup = xAxisGroup;
+    g2_params.yAxisGroup = yAxisGroup;
+    g2_params.labelX = labelX;
+    g2_params.labelY = labelY;
+
+  	// d3.interval(function(){
+    //     step_graph_2(data, g, x, y, xAxisGroup, yAxisGroup, labelX, labelY);
+  	// }, 1000);
 
   	update(data, g, x, y, xAxisGroup, yAxisGroup, labelX, labelY);
   }).catch(function(error){
   	console.log(error)
   });
 }
+
+$("#play-button-graph-2")
+    .on("click", function(){
+            var button = $(this);
+            if (button.text() == "Play"){
+                button.text("Pause");
+                interval_graph_2 = setInterval(step_graph_2, 1000);
+            }
+            else {
+                button.text("Play");
+                clearInterval(interval_graph_2);
+            }
+
+          });
+
+
+function step_graph_2(data, g, x, y, xAxisGroup, yAxisGroup, labelX, label){
+  update(g2_params.data, g2_params.g, g2_params.x, g2_params.y, g2_params.xAxisGroup, g2_params.yAxisGroup, g2_params.labelX, g2_params.labelY);
+  flag += 1;
+  if(flag > 2) {flag = 0;};
+}
+
 
 function update(data, g, x, y, xAxisGroup, yAxisGroup, labelX, labelY){
   var value;
@@ -130,6 +175,8 @@ function update(data, g, x, y, xAxisGroup, yAxisGroup, labelX, labelY){
 	// update label
   var labelYText = value;
 	labelY.text(labelYText)
+
+  g2_params.labelYText = labelYText;
 
 	// declare transition
 	var t = d3.transition().duration(250);
