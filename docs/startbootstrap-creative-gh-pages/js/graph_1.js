@@ -11,14 +11,17 @@ var g1_params = { labelX:'',
                   xAxisGroup:'',
                   yAxisGroup:'',
                   g:'',
-                  data:''};
+                  data:'',
+                  ut4m_2017:'',
+                  occ_2017:'',
+                  occ_2016:''};
 
 var margin = { left:80, right:10, top:60, bottom:160 };
 
 var height_test = parseInt(d3.select("#chart-area-1").style("height"), 10),
     width_test = parseInt(d3.select("#chart-area-1").style("width"), 10);
 
-console.log("Test height and width: " + (height_test) + ", " + width_test);
+console.log("Got height and width: " + (height_test) + ", " + width_test);
 
 var width = width_test - margin.left - margin.right,//960 - margin.left - margin.right,
     height = 480 - margin.top - margin.bottom;//480 - margin.top - margin.bottom;
@@ -69,55 +72,72 @@ var yAxisGroup = g_graph_1.append("g")
 	.attr("class", "y-axis");
 
 // read data: Total,TimeBin,Women,Men
-//TODO: create a function for this with param for data
-d3.csv("../data/ut4m_2017_hist_detailed_cats.csv").then(function(data){
-    var keys = data.columns.slice(4); //Men + Women columns
+function read_data(competition){
+  d3.csv("../data/" + competition + "_hist.csv").then(function(data){
+      var keys = data.columns.slice(4); //Men + Women columns
 
-    console.log("i have read the data - occ 2017");
-    console.log(data);
-    console.log(d3.stack().keys(keys)(data));
+      console.log("Reading " + competition);
 
-    // transform string data to integer
-    data.forEach(function(d, i, columns){
-        for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-        d.Total = +d.Total;
-    });
-
-    g1_params.data = data;
-
-	  update_graph1(data);
-
-}).catch(function(error){
-	console.log(error)
-});
-
-$("#play-button-graph-1")
-  .on("click", function(){
-    //alert("gonna change the data" + window.location.href);
-
-    //TODO --- TOTAL REDOXXXXX // TODO:
-    d3.csv("../data/ut4m_2014_hist_detailed_cats_fake.csv").then(function(data){
-        var keys = data.columns.slice(4); //Men + Women columns
-
-        console.log("i have read the data - occ 2014!!!");
-        console.log(data);
-        console.log(d3.stack().keys(keys)(data));
-
-        // transform string data to integer
-        data.forEach(function(d, i, columns){
-            for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-            d.Total = +d.Total;
-        });
-
-        g1_params.data = data;
-
-        update_graph1(data);
+      // transform string data to integer
+      data.forEach(function(d, i, columns){
+          for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+          d.Total = +d.Total;
       });
+
+      g1_params[competition] = data;
+
+      // default
+      if(competition == 'occ_2017'){
+        g1_params.data = g1_params[competition];
+        update_graph1(g1_params.data);
+      }
+
+  }).catch(function(error){
+  	console.log(error)
   });
+}
 
 
-function update_graph1(data){
-  console.log("in update data");
+read_data('occ_2014');
+read_data('occ_2015');
+read_data('occ_2016');
+read_data('occ_2017');
+read_data('ut4m_2017');
+
+$("#play-button-graph-1-2016")
+  .on("click", function(){
+    g1_params.data = g1_params['occ_2016'];
+    update_graph1(g1_params.data);
+  });
+$("#play-button-graph-1-2017")
+    .on("click", function(){
+      g1_params.data = g1_params['occ_2017'];
+      update_graph1(g1_params.data);
+    });
+$("#year-select")
+    .on("change", function(){
+        var competition = $("#year-select").val();
+        g1_params.data = g1_params[competition];
+        update_graph1(g1_params.data);
+    })
+$("#date-slider").slider({
+    max: 2017,
+    min: 2014,
+    step: 1,
+    value: 2017,
+    slide: function(event, ui){
+        var year = ui.value;
+        $("#year")[0].innerHTML = year;
+        var competition = "occ_" + year;
+        g1_params.data = g1_params[competition];
+        update_graph1(g1_params.data);
+    }
+})
+//$("#date-slider").slider("value", +(time + 1800))
+
+function update_graph1(){
+  data = g1_params.data;
+
   var keys = data.columns.slice(4);
 
 	// x scale domain update
@@ -125,7 +145,6 @@ function update_graph1(data){
 
 	// y scale domain update
 	y.domain([0, d3.max(data, function(d){return d["Total"];})]).nice();
-  console.log(d3.max(data, function(d){return d["Total"];}));
 
   // useful ordinal color scale
   var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]);
@@ -157,95 +176,75 @@ function update_graph1(data){
 	    });
 	yAxisGroup.call(yAxisCall);
 
-  console.log("called the axis");
-
 	// update label
   var labelYText = "Number of runners";
 	labelY.text(labelYText)
 
-  console.log("updated label text");
-
-	// declare transition
 	var t = d3.transition().duration(250);
+  var rects = g_graph_1;
 
-    // JOIN new data with old elements.
-    // REDOX - why is this not working?
-    // var rects = g_graph_1.selectAll("rect")
-    //     .data(data, function(d){
-    //     	return d.TimeBin;
-    //     });
-    var rects = g_graph_1;
+//TODO: REDOX ---->>>TOOLTIP
+  var tip = d3.tip().attr("class", "d3-tip")
+        .html(function(d){
+          var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
+          text += "Women: " + d.data.Women + "<br>";
+          text += "Men: " + d.data.Men + "<br></span>";
+          return text;
+        });
 
-    //---->>>TOOLTIP
-      var tip = d3.tip().attr("class", "d3-tip")
-            .html(function(d){
-              console.log(d);
-              console.log(d.data);
-              console.log(d.data.TimeBin);
-              console.log(d.data.Men);
-              var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
-              text += "Women: " + d.data.Women + "<br>";
-              text += "Men: " + d.data.Men + "<br></span>";
-              return text;
-            });
+  rects.call(tip);
+//<<-----TOOLTIP
 
-      rects.call(tip);
-
-    //<<-----TOOLTIP
-
-    // EXIT old elements not present in new data.
-    rects.exit()
-        .attr("fill", "red")
-    .transition(t)
+//--->>> GRAPH
+    //Remove old elements.
+    rects
+      .selectAll("g")
+      .selectAll("rect")
+      .remove();
+    //Append.
+    rects.append("g")
+      .selectAll("g")
+        //MANAGE STACKING
+      .data(d3.stack().keys(keys)(data))
+      .enter().append("g")
+        .attr("fill", function(d) { return colorScale(d.key); })
+      .selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+        .on("mouseover", tip.show)
+        .on("mouseout", tip.hide)
+        //setup transition
         .attr("y", y(0))
         .attr("height", 0)
-        .remove();
-
-//------->>>TO BE DELETED AND/OR REWORKED!!!
-      rects.append("g")
-        .selectAll("g")
-          //MANAGE STACKING
-        .data(d3.stack().keys(keys)(data))
-        .enter().append("g")
-          .attr("fill", function(d) { return colorScale(d.key); })
-        .selectAll("rect")
-        .data(function(d) { return d; })
-        .enter().append("rect")
-          .on("mouseover", tip.show)
-          .on("mouseout", tip.hide)
-          //setup transition
-          .attr("y", y(0))
-          .attr("height", 0)
-          .attr("x", function(d){ return x(d.data.TimeBin) })
-          .attr("width", x.bandwidth)
-          //start transition
-          .transition(t)
-            .attr("x", function(d) { return x(d.data.TimeBin); })
-            .attr("y", function(d) { return y(d[1]); })
-            .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-            .attr("width", x.bandwidth());
-//<<-----TO BE DELETED
+        .attr("x", function(d){ return x(d.data.TimeBin) })
+        .attr("width", x.bandwidth)
+        //start transition
+        .transition(t)
+          .attr("x", function(d) { return x(d.data.TimeBin); })
+          .attr("y", function(d) { return y(d[1]); })
+          .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+          .attr("width", x.bandwidth());
+//<<----GRAPH
 
 //--->LEGENDS
-var legend = rects.append("g")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 10)
-    .attr("text-anchor", "end")
-  .selectAll("g")
-  .data(keys.slice()) //.reverse() if you wish
-  .enter().append("g")
-    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+  var legend = rects.append("g")
+      .attr("font-size", 10)
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice()) //.reverse() if you wish
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-legend.append("rect")
-    .attr("x", width - 19)
-    .attr("width", 19)
-    .attr("height", 19)
-    .attr("fill", colorScale);
+  legend.append("rect")
+      .attr("x", width - 19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", colorScale);
 
-legend.append("text")
-    .attr("x", width - 24)
-    .attr("y", 9.5)
-    .attr("dy", "0.32em")
-    .text(function(d) { return d; });
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9.5)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
 //<<----LEGENDS
 };
