@@ -93,7 +93,7 @@ d3.csv("../data/ut4m_2017_hist_detailed_cats.csv").then(function(data){
 
 $("#play-button-graph-1")
   .on("click", function(){
-    alert("gonna change the data");
+    //alert("gonna change the data" + window.location.href);
 
     //TODO --- TOTAL REDOXXXXX // TODO:
     d3.csv("../data/ut4m_2014_hist_detailed_cats_fake.csv").then(function(data){
@@ -110,9 +110,9 @@ $("#play-button-graph-1")
         });
 
         g1_params.data = data;
+
+        update_graph1(data);
       });
-
-
   });
 
 
