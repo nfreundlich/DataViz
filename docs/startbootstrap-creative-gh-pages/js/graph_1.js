@@ -2,8 +2,8 @@
 *    graph_1.js
 *    OCC 2014 - 2017
 */
-
-var g1_params = { labelX:'',
+var g1_params = { flag:1,
+                  labelX:'',
                   labelY:'',
                   labelYText:'',
                   x:'',
@@ -14,7 +14,10 @@ var g1_params = { labelX:'',
                   data:'',
                   ut4m_2017:'',
                   occ_2017:'',
-                  occ_2016:''};
+                  occ_2016:'',
+                  filtered:'',
+                  allcolumns:'',
+                };
 
 var margin = { left:80, right:10, top:60, bottom:160 };
 
@@ -89,6 +92,9 @@ function read_data(competition){
       // default
       if(competition == 'occ_2017'){
         g1_params.data = g1_params[competition];
+        console.log(g1_params.data);
+        g1_params.filtered = g1_params.data['columns'].slice(4);
+        g1_params.allcolumns = g1_params.data['columns'].slice(4);
         update_graph1(g1_params.data);
       }
 
@@ -104,15 +110,21 @@ read_data('occ_2016');
 read_data('occ_2017');
 read_data('ut4m_2017');
 
+//ESH,ESF,SEH,SEF,V1H,V1F,V2H,V2F,V3H,V3F,V4H,V4F
 $("#play-button-graph-1-2016")
   .on("click", function(){
-    g1_params.data = g1_params['occ_2016'];
-    update_graph1(g1_params.data);
+    g1_params.filtered = ["ESF", "SEF", "V1F", "V2F", "V3F", "V4F"];
+    update_graph1();
   });
 $("#play-button-graph-1-2017")
     .on("click", function(){
-      g1_params.data = g1_params['occ_2017'];
-      update_graph1(g1_params.data);
+      g1_params.filtered = ["SEH", "SEF"];
+      update_graph1();
+    });
+$("#play-button-graph-1-all")
+    .on("click", function(){
+      g1_params.filtered = g1_params.allcolumns;
+      update_graph1();
     });
 $("#year-select")
     .on("change", function(){
@@ -133,12 +145,14 @@ $("#date-slider").slider({
         update_graph1(g1_params.data);
     }
 })
-//$("#date-slider").slider("value", +(time + 1800))
+
 
 function update_graph1(){
   data = g1_params.data;
-
-  var keys = data.columns.slice(4);
+  console.log("before slice");
+  console.log(g1_params.filtered);
+  var keys = g1_params.filtered; //data['columns'].slice(4); //
+  console.log(keys);
 
 	// x scale domain update
 	x.domain(data.map(function(d){ return d.TimeBin; }));
@@ -201,6 +215,7 @@ function update_graph1(){
       .selectAll("g")
       .selectAll("rect")
       .remove();
+
     //Append.
     rects.append("g")
       .selectAll("g")
@@ -224,27 +239,35 @@ function update_graph1(){
           .attr("y", function(d) { return y(d[1]); })
           .attr("height", function(d) { return y(d[0]) - y(d[1]); })
           .attr("width", x.bandwidth());
+
+  //--->LEGENDS
+    //TODO: REDOX!!!
+    if (g1_params.flag == 1){
+      g1_params.flag = 0;
+      var legend = g_graph_1.append("g")
+          .attr("font-size", 10)
+          .attr("text-anchor", "end")
+        .selectAll("g")
+        .data(g1_params.allcolumns) //.reverse() if you wish
+        .enter().append("g")
+          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+      legend.append("circle")
+          .attr("cx", width - 19)
+          .attr("r", 5)
+          // .attr("width", 19)
+          // .attr("height", 19)
+          .attr("fill", colorScale)
+          .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
+
+      legend.append("text")
+          .attr("x", width - 24)
+          .attr("y", 9.5)
+          .attr("dy", "0.32em")
+          .text(function(d) { return d; });
+        g1_params.flag = 0;
+    }
+  //<<----LEGENDS
 //<<----GRAPH
 
-//--->LEGENDS
-  var legend = rects.append("g")
-      .attr("font-size", 10)
-      .attr("text-anchor", "end")
-    .selectAll("g")
-    .data(keys.slice()) //.reverse() if you wish
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  legend.append("rect")
-      .attr("x", width - 19)
-      .attr("width", 19)
-      .attr("height", 19)
-      .attr("fill", colorScale);
-
-  legend.append("text")
-      .attr("x", width - 24)
-      .attr("y", 9.5)
-      .attr("dy", "0.32em")
-      .text(function(d) { return d; });
-//<<----LEGENDS
 };

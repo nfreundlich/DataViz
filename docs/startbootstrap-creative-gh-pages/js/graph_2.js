@@ -1,7 +1,6 @@
 /*
-*    main.js
-*    Mastering Data Visualization with D3.js
-*    Project 1 - Star Break Coffee
+*    graph_2.js
+*    UT4M vs OCC
 */
 var flag = 0; //0,1,2 == Total, Men, Women
 var g2_params = { labelX:'',
