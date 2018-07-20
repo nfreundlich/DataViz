@@ -23,7 +23,7 @@ var g1_params = { flag:1,
                   max_slice: 41,
                 };
 
-var margin = { left:80, right:10, top:60, bottom:160 };
+var margin = { left:80, right:60, top:60, bottom:160 };
 
 var height_test = parseInt(d3.select("#chart-area-1").style("height"), 10),
     width_test = parseInt(d3.select("#chart-area-1").style("width"), 10);
@@ -320,19 +320,34 @@ function update_graph1(){
 function graph_1_legend()
 {
   // useful ordinal color scale
-  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]).domain(g1_params.allcolumns);
+  var cathegory_text = [
+    "Espoir, M",
+    "Espoir, W",
+    "Senior, M",
+    "Senior, W",
+    "Vet 1, M",
+    "Vet 1, W",
+    "Vet 2, M",
+    "Vet 2, W",
+    "Vet 3, M",
+    "Vet 3, W",
+    "Vet 4, M",
+    "Vet 4, W"
+  ];
+  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]).domain(cathegory_text);//g1_params.allcolumns);
   var colorScale = yColorOrdinal;
 
   var legend = g_graph_1.append("g")
+      .attr("font", "Arial")
       .attr("font-size", 10)
       .attr("text-anchor", "end")
     .selectAll("g")
-    .data(g1_params.allcolumns) //.reverse() if you wish
+    .data(cathegory_text)//g1_params.allcolumns) //.reverse() if you wish
     .enter().append("g")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("circle")
-      .attr("cx", width - 19)
+      .attr("cx", width)//- 19)
       .attr("r", 5)
       // .attr("width", 19)
       // .attr("height", 19)
@@ -340,7 +355,7 @@ function graph_1_legend()
       .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
 
   legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width - 6)//- 24)
       .attr("y", 9.5)
       .attr("dy", "0.32em")
       .text(function(d) { return d; });
