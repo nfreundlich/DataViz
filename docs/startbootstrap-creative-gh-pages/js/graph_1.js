@@ -98,6 +98,7 @@ function read_data(competition){
         g1_params.filtered = g1_params.data['columns'].slice(4);
         g1_params.allcolumns = g1_params.data['columns'].slice(4);
         update_graph1(g1_params.data);
+        graph_1_legend();
       }
 
   }).catch(function(error){
@@ -187,6 +188,10 @@ function filter_cat(columns)
     }
   });
 }
+// Compute sum of array for dynamic scaling
+function getSum(total, num) {
+    return total + num;
+}
 
 $("#date-slider").slider({
     max: 2017,
@@ -212,39 +217,35 @@ $("#minutes-slider").slider({
         g1_params.min_slice = (ui.values[ 0 ] - 300) / 15;
         g1_params.max_slice = (ui.values[ 1 ] - 300) / 15;
         console.log(g1_params.min_slice + "-->" + g1_params.max_slice);
+        $("#minutes")[0].innerHTML = ui.values[0] + " - " + ui.values[1];
         update_graph1();
     }
 });
 
 
 function update_graph1(){
-  data = g1_params.data.slice(g1_params.min_slice, g1_params.max_slice);;
+  data = g1_params.data.slice(g1_params.min_slice, g1_params.max_slice + 1);
 
-  //console.log(g1_params.filtered);
-  //var keys = g1_params.filtered;
   var keys = filter_cat(filter_gender(g1_params.allcolumns));
   console.log("keys: " + keys);
+  console.log(data);
+
+  var y_domain_max = d3.max(data, function(d){
+    local_total = 0;
+    keys.forEach(function(element){
+      local_total = local_total + (+d[element]);
+    });
+    return local_total;
+  });
 
 	// x scale domain update
 	x.domain(data.map(function(d){ return d.TimeBin; }));
 
 	// y scale domain update
-	y.domain([0, d3.max(data, function(d){return d["Total"];})]).nice();
+	y.domain([0, y_domain_max]).nice();
 
   // useful ordinal color scale
-  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]);
-
-  // color scale (optional and useless from data pov)
-	var yColorInterpolateRainbow = d3.scaleSequential()
-		.domain([0, d3.max(data, function(d){
-            return d["Total"];
-        })])
-		.interpolator(d3.interpolateRainbow);
-	var yColorInterpolateWarm = d3.scaleSequential()
-		.domain([0, d3.max(data, function(d){return d["Total"];})])
-		.interpolator(d3.interpolateRainbow);
-  // end of useless color scales, play with this later maybe
-
+  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]).domain(g1_params.allcolumns);
   var colorScale = yColorOrdinal;
 
 	var xAxisCall = d3.axisBottom(x);
@@ -294,7 +295,9 @@ function update_graph1(){
         //MANAGE STACKING
       .data(d3.stack().keys(keys)(data))
       .enter().append("g")
-        .attr("fill", function(d) { return colorScale(d.key); })
+        .attr("fill", function(d) {
+          console.log('key: ' + d.key + 'color: ' + colorScale(d.key));
+          return colorScale(d.key); })
       .selectAll("rect")
       .data(function(d) { return d; })
       .enter().append("rect")
@@ -311,35 +314,34 @@ function update_graph1(){
           .attr("y", function(d) { return y(d[1]); })
           .attr("height", function(d) { return y(d[0]) - y(d[1]); })
           .attr("width", x.bandwidth());
-
-  //--->LEGENDS
-    //TODO: REDOX!!!
-    if (g1_params.flag == 1){
-      g1_params.flag = 0;
-      var legend = g_graph_1.append("g")
-          .attr("font-size", 10)
-          .attr("text-anchor", "end")
-        .selectAll("g")
-        .data(g1_params.allcolumns) //.reverse() if you wish
-        .enter().append("g")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-      legend.append("circle")
-          .attr("cx", width - 19)
-          .attr("r", 5)
-          // .attr("width", 19)
-          // .attr("height", 19)
-          .attr("fill", colorScale)
-          .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
-
-      legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9.5)
-          .attr("dy", "0.32em")
-          .text(function(d) { return d; });
-        g1_params.flag = 0;
-    }
-  //<<----LEGENDS
 //<<----GRAPH
-
 };
+
+function graph_1_legend()
+{
+  // useful ordinal color scale
+  var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]).domain(g1_params.allcolumns);
+  var colorScale = yColorOrdinal;
+
+  var legend = g_graph_1.append("g")
+      .attr("font-size", 10)
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(g1_params.allcolumns) //.reverse() if you wish
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("circle")
+      .attr("cx", width - 19)
+      .attr("r", 5)
+      // .attr("width", 19)
+      // .attr("height", 19)
+      .attr("fill", colorScale)
+      .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9.5)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
+}
