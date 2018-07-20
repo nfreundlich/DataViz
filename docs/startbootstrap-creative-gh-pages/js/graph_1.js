@@ -15,8 +15,12 @@ var g1_params = { flag:1,
                   ut4m_2017:'',
                   occ_2017:'',
                   occ_2016:'',
+                  occ_2015:'',
+                  occ_2014:'',
                   filtered:'',
                   allcolumns:'',
+                  min_slice: 0,
+                  max_slice: 41,
                 };
 
 var margin = { left:80, right:10, top:60, bottom:160 };
@@ -24,10 +28,8 @@ var margin = { left:80, right:10, top:60, bottom:160 };
 var height_test = parseInt(d3.select("#chart-area-1").style("height"), 10),
     width_test = parseInt(d3.select("#chart-area-1").style("width"), 10);
 
-console.log("Got height and width: " + (height_test) + ", " + width_test);
-
-var width = width_test - margin.left - margin.right,//960 - margin.left - margin.right,
-    height = 480 - margin.top - margin.bottom;//480 - margin.top - margin.bottom;
+var width = width_test - margin.left - margin.right, //960 - margin.left - margin.right,
+    height = 480 - margin.top - margin.bottom;       //480 - margin.top - margin.bottom;
 
 var g_graph_1 = d3.select("#chart-area-1")
     .append("svg")
@@ -103,35 +105,89 @@ function read_data(competition){
   });
 }
 
-
 read_data('occ_2014');
 read_data('occ_2015');
 read_data('occ_2016');
 read_data('occ_2017');
-read_data('ut4m_2017');
+// read_data('ut4m_2017');
 
 //ESH,ESF,SEH,SEF,V1H,V1F,V2H,V2F,V3H,V3F,V4H,V4F
-$("#play-button-graph-1-2016")
-  .on("click", function(){
-    g1_params.filtered = ["ESF", "SEF", "V1F", "V2F", "V3F", "V4F"];
-    update_graph1();
-  });
-$("#play-button-graph-1-2017")
+$("#play-button-graph-1-2017") //age filter test temp
     .on("click", function(){
-      g1_params.filtered = ["SEH", "SEF"];
+      console.log(g1_params.data.slice(3,8));
+      g1_params.data = g1_params.data.slice(3,8)
+
       update_graph1();
     });
-$("#play-button-graph-1-all")
+$("#button-reset")
     .on("click", function(){
       g1_params.filtered = g1_params.allcolumns;
+      g1_params.data = g1_params.occ_2017;
+      g1_params.min_slice = 0;
+      g1_params.max_slice = 41;
+      $("#occ-gender-select").val("occ_gender_all");
+      $("#occ-cat-select").val("occ_cat_all");
       update_graph1();
     });
-$("#year-select")
+$("#occ-gender-select")
     .on("change", function(){
-        var competition = $("#year-select").val();
-        g1_params.data = g1_params[competition];
-        update_graph1(g1_params.data);
-    })
+        update_graph1();
+    });
+$("#occ-cat-select")
+    .on("change", function(){
+        update_graph1();
+    });
+
+//gender -- cat
+function filter_gender(columns)
+{
+  gender = $("#occ-gender-select").val();
+  console.log('Filter on gender: ' + gender);
+
+  // TODO: REDOX - apply cleaner mapping, eg:
+  // filteredDistances = distances.filter(item => item.distance < 10000)
+  // g1_params.allcolumns.filter(item => oo);
+
+  return columns.filter(function(d){
+    if(gender == "occ_gender_women"){
+      if (["ESF", "SEF", "V1F", "V2F", "V3F", "V4F"].includes(d)){return d;};
+    }
+    else if (gender == "occ_gender_men") {
+      if(["ESH", "SEH", "V1H", "V2H", "V3H", "V4H"].includes(d)){return d;};
+    }
+    else{
+      return columns;
+    }
+  });
+}
+function filter_cat(columns)
+{
+  var cat = $("#occ-cat-select").val();
+  return columns.filter(function(d){
+    if(cat == "occ_cat_es"){
+      if(["ESF", "ESH"].includes(d)){return d;};
+    }
+    else if (cat == "occ_cat_se") {
+      if(["SEF", "SEH"].includes(d)){return d;};
+    }
+    else if (cat == "occ_cat_ve1") {
+      if(["V1F", "V1H"].includes(d)){return d;};
+    }
+    else if (cat == "occ_cat_ve2") {
+      if(["V2F", "V2H"].includes(d)){return d;};
+    }
+    else if (cat == "occ_cat_ve3") {
+      if(["V3F", "V3H"].includes(d)){return d;};
+    }
+    else if (cat == "occ_cat_ve4") {
+      if(["V4F", "V4H"].includes(d)){return d;};
+    }
+    else{
+      return columns;
+    }
+  });
+}
+
 $("#date-slider").slider({
     max: 2017,
     min: 2014,
@@ -144,15 +200,30 @@ $("#date-slider").slider({
         g1_params.data = g1_params[competition];
         update_graph1(g1_params.data);
     }
-})
+});
+$("#minutes-slider").slider({
+    range: true,
+    max: 900,
+    min: 300,
+    step: 15,
+    values: [300, 900],
+    slide: function(event, ui){
+        console.log('minslider: ' + ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+        g1_params.min_slice = (ui.values[ 0 ] - 300) / 15;
+        g1_params.max_slice = (ui.values[ 1 ] - 300) / 15;
+        console.log(g1_params.min_slice + "-->" + g1_params.max_slice);
+        update_graph1();
+    }
+});
 
 
 function update_graph1(){
-  data = g1_params.data;
-  console.log("before slice");
-  console.log(g1_params.filtered);
-  var keys = g1_params.filtered; //data['columns'].slice(4); //
-  console.log(keys);
+  data = g1_params.data.slice(g1_params.min_slice, g1_params.max_slice);;
+
+  //console.log(g1_params.filtered);
+  //var keys = g1_params.filtered;
+  var keys = filter_cat(filter_gender(g1_params.allcolumns));
+  console.log("keys: " + keys);
 
 	// x scale domain update
 	x.domain(data.map(function(d){ return d.TimeBin; }));
@@ -211,6 +282,7 @@ function update_graph1(){
 
 //--->>> GRAPH
     //Remove old elements.
+    //TODO: REDOX
     rects
       .selectAll("g")
       .selectAll("rect")
