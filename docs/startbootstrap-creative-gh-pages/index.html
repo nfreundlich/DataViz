@@ -18,6 +18,19 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
+    <!-- My style -->
+    <style>
+      #mytooltip {
+      	opacity : 0;
+      	position: absolute;
+      	width : 60px;
+      	height: 50px;
+      	background: whitesmoke;
+      	text-align: left;
+      	border: 1px;
+      	}
+    </style>
+
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
@@ -92,10 +105,19 @@
             <h2 class="section-heading text-white">The Story</h2>
             <p class="text-faded mb-5" style="text-align:left; font-size:11px;">
               <br />
-              - What are the average times for completing the OCC? How do they vary based on gender, age, edition?<br /> - How did the average running times evolve for OCC between 2014-2017?<br />
-              - How do the mean times from OCC compare to a similar cathegory trail (UT4M Chartreuse 2017)?<br /><br /> <br /> The graphs and their interpretation<br /> <strong>A) OCC 2014 - 2017 Analysis (histogram)</strong><br />
-              - X axis - duration of the run (15' bins) / Y axis - number of runners in the interval<br /> - Color coding: a main color palette (green/yellow) to highlight the difference between male/female atheletes; secondary color palette (shades ) is used to highlight various age cathegories<br /> - Analysis: consistently more male runners than female runners; male running time is slightly faster than female running time (appx 30' )<br /><br /><strong> A') OCC 2014 - 2017 Average running time evolution</strong><br /> - X Axis: years from 2014 - 2017 / Y Axis: average running time in minutes<br /> - Remark: I chose a line graph for this discreet measure to suggest the evolution of the averages, in a 'trend line' approach<br /> - Analysis: an interesting discovery - the average run times considering all runner cathegories, vary only by 3 min (0.5%) in four years.<br /><br /> <strong>B) OCC vs UT4M comparison (histogram)</strong><br /> - X &amp; Y axis: similar to A) graph<br /> - Color coding: a main color palette (blue/orange) for differentiating between OCC/UT4M; secondary color palette (shades) for less important differentiation btw cathegories<br />
-              - Analysis: OCC presents a significanlty higher effort than UT4M (a difference of appx 3h on average)<br /><br />
+              Long distance running might be somehow surprizing - especially if the terrain is unknown, as in trail running competitions. While preparing for a race, it would be interesting to have an idea of distribution of arrival times to estimate the difficulty to be expected.<br>
+
+              It happens that the same race accepts slight changes from edition to edition, and it would be also useful to have an overview of these changes and how do they affect the arrival times. <br>
+
+              Amateur atheletes are often aware of the elite arrival times, but the information regarding the estimated arrival of 'somebody like them' is rarely known. <br>
+
+              Moreover, comparing the arrival distribution of a new race to one which they have already run, could refine the expectations of effort. <br>
+
+              On the other hand, race organizers, especially if they are experienced, have a feeling about rush hours and empty hours. But do they have a scientific way to estimate arrival times? For races lasting from 3 to 7 days, optimizing the organization of supplies and medical staff is crucial. <br>
+
+              This is what the current visualization project wishes to address: analyze a race in detail (OCC, taking place in Chamonix, part of UTMB competition) and provide a comparison with UT4M trail (similar distance run in Grenoble).<br>
+
+              I chose to use an interactive slideshow approach, introducing the user the key elements of each scene, then allowing free manipulation of the graphs. <br>
             </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#occ">Continue to OCC</a>
           </div>
@@ -127,19 +149,41 @@
         </div>
 
         <div class = "row">
+          <p class="text-primary mb-5" style="text-align:left; font-size:11px;">
+            - What is the distribution of arrival times for the OCC Trail running competition?<br>
+            - How does this distribution vary based on gender, age, year of edition?<br>
+            - How did the average running times evolve for OCC between 2014-2017?<br />
 
-          <!--  Chart control -->
-          <!-- <div class="col-md-4" text-center>
-                <button id="play-button-graph-1-2017" class="btn btn-secondary">Filter on arrival low</button>
-          </div> -->
-          <!-- <div class="col-md-2" text-center>
-                <button id="button-reset" class="btn btn-secondary">Reset</button>
-          </div> -->
-          <!-- End of chart control -->
+        <br /> <br /> The graphs and their interpretation<br /> <strong>A) OCC 2014 - 2017 Analysis (histogram)</strong><br />
+          - X axis - duration of the run (15' bins) / Y axis - number of runners in the interval<br /> - Color coding: a main color palette (green/yellow) to highlight the difference between male/female atheletes; secondary color palette (shades ) is used to highlight various age cathegories<br /> - Analysis: consistently more male runners than female runners; male running time is slightly faster than female running time (appx 30' )<br /><br /><strong> A') OCC 2014 - 2017 Average running time evolution</strong><br /> - X Axis: years from 2014 - 2017 / Y Axis: average running time in minutes<br /> - Remark: I chose a line graph for this discreet measure to suggest the evolution of the averages, in a 'trend line' approach<br /> - Analysis: an interesting discovery - the average run times considering all runner cathegories, vary only by 3 min (0.5%) in four years.<br /><br />
+          </p>
         </div>
         <div class = "row">
           <div class="col-lg-10 text-center">
-             <div class="" id="chart-area-1"></div>
+            <div class="" id="chart-area-xxx">
+              <svg class="" id="chart-area-1">
+                <div id="tooltip-chart-1" class="mytooltip"
+                        style="
+                        position:absolute;
+                        width : 100px;
+        	              height: 80px;
+                        background: whitesmoke;
+                      	text-align: left;
+                      	border: 5px;
+                        opacity: 0">
+                </div>
+                <div id="annotation-chart-1" class="mytooltip"  opacity=0.8
+                        style="
+                        position:absolute;
+                        width : 160px;
+                        height: 50px;
+                        background: lightblue;
+                        text-align: left;
+                        border: 1px;">
+
+                </div>
+              </svg>
+            </div>
           </div>
           <div class="col-lg-2 text-center" id="filter_area_1">
             <div class="form-group" id="year-slider-div">
@@ -190,7 +234,12 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h5 class="section-heading">Comparison OCC - UT4M</h5>
-            <!-- Chart controls -->
+            <p class="text-primary mb-5" style="text-align:left; font-size:11px;">
+                  - How do the mean times from OCC compare to a similar cathegory trail (UT4M Chartreuse 2017)?<br />
+
+                  <strong>B) OCC vs UT4M comparison (histogram)</strong><br /> - X &amp; Y axis: similar to A) graph<br /> - Color coding: a main color palette (blue/orange) for differentiating between OCC/UT4M; secondary color palette (shades) for less important differentiation btw cathegories<br />
+                 - Analysis: OCC presents a significanlty higher effort than UT4M (a difference of appx 3h on average)<br /><br />
+            </p>
             <div class="col-md-1" text-center>
                   <button id="play-button-graph-2" class="btn btn-secondary">Play</button>
             </div>
@@ -242,7 +291,26 @@
             <h2 class="section-heading">References and technical details</h2>
             <hr class="my-4">
             <p class="mb-5" style="text-align:left; font-size:12px;">
-              <em>Data sources:</em><br /><em> - UT4M: https://ut4m.fr/fr/courses/resultats and UTMB/OCC: http://utmbmontblanc.com/en/page/107/107.html</em><br /><br /><em> Data prep:</em><br /><em> - Cleaned and concatenated the yearly results; python to clean data formatting issues</em><br />
+              <em>Data sources:</em><br />
+                - UT4M: https://ut4m.fr/fr/courses/resultats <br>
+                - UTMB/OCC: http://utmbmontblanc.com/en/page/107/107.html<br />
+              <br />
+              <em> Data prep:</em><br />
+                - Downloaded, cleaned and concatenated the yearly results <br>
+                - Python used to clean data formatting issues<br>
+                - Python with Pandas used to create the time bins / histograms. I have decided to perform the data prep part on python side wherever possible, to facilitate manipulation on in JS<br>
+              <br />
+              <em> External resources:</em><br />
+                - Bootstrap, used for site navigation <br>
+                - Creative one-page design, for single page design template<br>
+                - Udemy D3 training <br>
+                - Examples from http://bl.ocks.org<br>
+              <br />
+              <em> Some tech choices:</em><br />
+                - Since we have several graphs on a single page, each graph has its own list of parameters in a dedicated structure.<br>
+                - Whenever possible I have tried to use a declarative approach
+                - For the stacked bar charts, I have taken inspiration from the following design http://bl.ocks.org<br>
+              <br />
             </p>
           </div>
         </div>

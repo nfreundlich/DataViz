@@ -21,18 +21,22 @@ var g1_params = { flag:1,
                   allcolumns:'',
                   min_slice: 0,
                   max_slice: 41,
+                  offset: {
+                    top:0,
+                    left:0
+                  }
                 };
 
 var margin = { left:80, right:60, top:60, bottom:160 };
 
-var height_test = parseInt(d3.select("#chart-area-1").style("height"), 10),
-    width_test = parseInt(d3.select("#chart-area-1").style("width"), 10);
+var height_test = parseInt(d3.select("#chart-area-xxx").style("height"), 10),
+    width_test = parseInt(d3.select("#chart-area-xxx").style("width"), 10);
 
 var width = width_test - margin.left - margin.right, //960 - margin.left - margin.right,
     height = 480 - margin.top - margin.bottom;       //480 - margin.top - margin.bottom;
 
 var g_graph_1 = d3.select("#chart-area-1")
-    .append("svg")
+    // .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -97,8 +101,19 @@ function read_data(competition){
         console.log(g1_params.data);
         g1_params.filtered = g1_params.data['columns'].slice(4);
         g1_params.allcolumns = g1_params.data['columns'].slice(4);
+        g1_params.offset.left =  $("#chart-area-xxx").offset().left;
+        g1_params.offset.top =  $("#chart-area-xxx").offset().top;
         update_graph1(g1_params.data);
         graph_1_legend();
+
+        // TODO: factorize this
+        annotation = d3.select("#annotation-chart-1");
+        annotation
+          .style("opacity", 1)
+          .style("left", 100 + "px")
+          .style("top", 0 + "px")
+          .html(create_annotation_g1(2017));
+        // console.log(g1_params.offset.left , g1_params.offset.top)
       }
 
   }).catch(function(error){
@@ -203,6 +218,15 @@ $("#date-slider").slider({
         $("#year")[0].innerHTML = year;
         var competition = "occ_" + year;
         g1_params.data = g1_params[competition];
+
+        // TODO: annotation
+        annotation = d3.select("#annotation-chart-1");
+        annotation
+          .style("opacity", 1)
+          .style("left", 100 + "px")
+          .style("top", 0 + "px")
+          .html(create_annotation_g1(year));
+        console.log(annotation.html);
         update_graph1(g1_params.data);
     }
 });
@@ -222,6 +246,18 @@ $("#minutes-slider").slider({
     }
 });
 
+function create_annotation_g1(year){
+  var distance = 0;
+  var uphill = 0;
+
+  if(year == 2014){distance = 44.5; uphill = 2100;}
+  if(year == 2015){distance = 45; uphill = 2600;}
+  if(year == 2016){distance = 47; uphill = 2500;}
+  if(year == 2017){distance = 43; uphill = 2700;}
+
+  text = " Distance: " + distance + "km<br> Uphill: "+ uphill + "m";
+  return text;
+};
 
 function update_graph1(){
   data = g1_params.data.slice(g1_params.min_slice, g1_params.max_slice + 1);
@@ -296,18 +332,45 @@ function update_graph1(){
       .data(d3.stack().keys(keys)(data))
       .enter().append("g")
         .attr("fill", function(d) {
-          console.log('key: ' + d.key + 'color: ' + colorScale(d.key));
+          // console.log('key: ' + d.key + 'color: ' + colorScale(d.key));
           return colorScale(d.key); })
       .selectAll("rect")
       .data(function(d) { return d; })
       .enter().append("rect")
-        .on("mouseover", tip.show)
-        .on("mouseout", tip.hide)
+        //tooltip
+        // TODO: IMPORTANT CHECK WHY THIS IS NOT NICE!!! VERY IMPORTANT!!!
+        .on("mouseover", function(d) {
+
+          // TODO: update the text based on filters
+          var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
+          text += "Espoir Men: " + d.data.ESH + "<br>";
+          text += "Espoir Women: " + d.data.ESF + "<br>";
+
+          text += "</span>";
+          console.log(g_graph_1.style("top"));
+
+          // TODO: REDOX factorize offset and change chart name
+          tooltipx = d3.select("#tooltip-chart-1");
+          tooltipx
+            .style("opacity", 0.8)
+            .style("left", (d3.event.pageX - g1_params.offset.left) + "px")
+            .style("top", (d3.event.pageY - g1_params.offset.top) + "px")
+            .html(text);
+          console.log("on mouse in");
+        })
+        .on("mouseout", function(d) {
+          tooltipx = d3.select("#tooltip-chart-1");
+          tooltipx
+            .style("opacity", 0);
+          console.log("on mouse out");
+        })
         //setup transition
         .attr("y", y(0))
         .attr("height", 0)
         .attr("x", function(d){ return x(d.data.TimeBin) })
-        .attr("width", x.bandwidth)
+        .attr("width", x.bandwidth())
+
+
         //start transition
         .transition(t)
           .attr("x", function(d) { return x(d.data.TimeBin); })
