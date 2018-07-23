@@ -270,7 +270,6 @@ function update_graph1(){
 
 	// x scale domain update
 	x.domain(data.map(function(d){ return d.TimeBin; }));
-  console.log(data[0].TimeBin);
 
 	// y scale domain update
 	y.domain([0, y_domain_max]).nice();
@@ -379,18 +378,18 @@ function graph_1_legend()
 {
   // useful ordinal color scale
   var cathegory_text = [
-    "Espoir, M",
     "Espoir, W",
-    "Senior, M",
+    "Espoir, M",
     "Senior, W",
-    "Vet 1, M",
+    "Senior, M",
     "Vet 1, W",
-    "Vet 2, M",
+    "Vet 1, M",
     "Vet 2, W",
-    "Vet 3, M",
+    "Vet 2, M",
     "Vet 3, W",
-    "Vet 4, M",
-    "Vet 4, W"
+    "Vet 3, M",
+    "Vet 4, W",
+    "Vet 4, M"
   ];
   var yColorOrdinal = d3.scaleOrdinal(d3["schemePaired"]).domain(cathegory_text);//g1_params.allcolumns);
   var colorScale = yColorOrdinal;
@@ -405,7 +404,7 @@ function graph_1_legend()
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("circle")
-      .attr("cx", width)//- 19)
+      .attr("cx", width + 50)//- 19) //remark: updated because of false g2 interference
       .attr("r", 5)
       // .attr("width", 19)
       // .attr("height", 19)
@@ -413,7 +412,7 @@ function graph_1_legend()
       .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
 
   legend.append("text")
-      .attr("x", width - 6)//- 24)
+      .attr("x", width + 44)//- 6)//- 24) //remark: updated because of false g2 interference
       .attr("y", 9.5)
       .attr("dy", "0.32em")
       .text(function(d) { return d; });
