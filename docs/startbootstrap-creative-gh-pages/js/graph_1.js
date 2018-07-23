@@ -83,8 +83,6 @@ var yAxisGroup = g_graph_1.append("g")
 // read data: Total,TimeBin,Women,Men
 function read_data(competition){
   d3.csv("../data/" + competition + "_hist.csv").then(function(data){
-      var keys = data.columns.slice(4); //Men + Women columns
-
       console.log("Reading " + competition);
 
       // transform string data to integer
@@ -203,10 +201,6 @@ function filter_cat(columns)
     }
   });
 }
-// Compute sum of array for dynamic scaling
-function getSum(total, num) {
-    return total + num;
-}
 
 $("#date-slider").slider({
     max: 2017,
@@ -219,7 +213,7 @@ $("#date-slider").slider({
         var competition = "occ_" + year;
         g1_params.data = g1_params[competition];
 
-        // TODO: annotation
+        // TODO: annotation factorize this
         annotation = d3.select("#annotation-chart-1");
         annotation
           .style("opacity", 1)
@@ -276,6 +270,7 @@ function update_graph1(){
 
 	// x scale domain update
 	x.domain(data.map(function(d){ return d.TimeBin; }));
+  console.log(data[0].TimeBin);
 
 	// y scale domain update
 	y.domain([0, y_domain_max]).nice();
