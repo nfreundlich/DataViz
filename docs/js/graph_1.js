@@ -64,8 +64,8 @@ var labelY = g_graph_1.append("text")
 // x scale
 var x = d3.scaleBand()
     .range([0, width])
-    .paddingInner(0.3)
-    .paddingOuter(0.3);
+    .paddingInner(0.1)
+    .paddingOuter(0.1);
 
 // y scale
 var y = d3.scaleLinear()

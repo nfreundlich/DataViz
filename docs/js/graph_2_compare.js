@@ -75,8 +75,8 @@ graph2.labels.labelY = graph2.graph.append("text")
 // x scale
 graph2.scales.x = d3.scaleBand()
     .range([0, graph2.dimensions.width])
-    .paddingInner(0.3)
-    .paddingOuter(0.3);
+    .paddingInner(0.1)
+    .paddingOuter(0.1);
 
 // y scale
 graph2.scales.y = d3.scaleLinear()
@@ -438,15 +438,13 @@ function graph_2_legend()
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("circle")
-      .attr("cx", graph2.dimensions.width + 50)//)//- 19)
+      .attr("cx", graph2.dimensions.width + 50)
       .attr("r", 5)
-      // .attr("width", 19)
-      // .attr("height", 19)
       .attr("fill", graph2.scales.color)
       .attr('transform', 'translate(' + 2 + ',' + 9 + ')');
 
   legend.append("text")
-      .attr("x", graph2.dimensions.width + 44)//- 6)//- 24)
+      .attr("x", graph2.dimensions.width + 44)
       .attr("y", 9.5)
       .attr("dy", "0.32em")
       .text(function(d) { return d; });
