@@ -93,7 +93,7 @@ graph2.axis.yAxisGroup = graph2.graph.append("g")
 
 // read data: Total,TimeBin,Women,Men
 function read_data_graph_2(competition){
-  d3.csv("/data/" + competition + "_hist.csv").then(function(data){
+  d3.csv("./data/" + competition + "_hist.csv").then(function(data){
       console.log("Reading " + competition);
 
       // transform string data to integer

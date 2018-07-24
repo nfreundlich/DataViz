@@ -82,7 +82,7 @@ var yAxisGroup = g_graph_1.append("g")
 
 // read data: Total,TimeBin,Women,Men
 function read_data(competition){
-  d3.csv("/data/" + competition + "_hist.csv").then(function(data){
+  d3.csv("./data/" + competition + "_hist.csv").then(function(data){
       console.log("Reading " + competition);
 
       // transform string data to integer
