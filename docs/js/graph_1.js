@@ -235,7 +235,7 @@ $("#minutes-slider").slider({
         g1_params.min_slice = (ui.values[ 0 ] - 300) / 15;
         g1_params.max_slice = (ui.values[ 1 ] - 300) / 15;
         console.log(g1_params.min_slice + "-->" + g1_params.max_slice);
-        $("#minutes")[0].innerHTML = ui.values[0] + " - " + ui.values[1];
+        $("#minutes")[0].innerHTML = ui.values[0] + "' - " + ui.values[1] + "'";
         update_graph1();
     }
 });
@@ -249,7 +249,7 @@ function create_annotation_g1(year){
   if(year == 2016){distance = 47; uphill = 2500;}
   if(year == 2017){distance = 43; uphill = 2700;}
 
-  text = " Distance: " + distance + "km<br> Uphill: "+ uphill + "m";
+  text = " Distance: " + distance + "km<br> Elevation gain: "+ uphill + "m";
   return text;
 };
 

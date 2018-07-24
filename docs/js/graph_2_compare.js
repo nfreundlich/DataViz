@@ -129,12 +129,8 @@ function read_data_graph_2(competition){
   	console.log(error)
   });
 }
-//
-// read_data_graph_2('occ_2014');
-// read_data_graph_2('occ_2015');
-// read_data_graph_2('occ_2016');
+
 read_data_graph_2('occ_ut4m_2017_simple_cropped');
-// read_data_graph_2('ut4m_2017');
 
 // //ESH,ESF,SEH,SEF,V1H,V1F,V2H,V2F,V3H,V3F,V4H,V4F
 // $("#play-button-graph-1-2017") //age filter test temp
@@ -264,10 +260,39 @@ read_data_graph_2('occ_ut4m_2017_simple_cropped');
 //   return text;
 // };
 
+// Race select group
+$('#checkRaceOCC').change(function(){
+  console.log("OCC:" + $('#checkRaceOCC').prop("checked"));
+  update_graph_2();
+});
+$('#checkRaceUT4M').change(function(){
+  console.log("UT4M:" + $('#checkRaceUT4M').prop("checked"));
+  update_graph_2();
+});
+
+function filter_race(columns)
+{
+  console.log("Filter on race");
+  raceOCC = $('#checkRaceOCC').prop("checked");
+  raceUT4M = $('#checkRaceUT4M').prop("checked");
+
+  return columns.filter(function(d){
+    if(raceOCC){
+      if (["WomenOCC", "MenOCC"].includes(d)){return d;};
+    }
+    if (raceUT4M) {
+      if(["WomenUT4M", "MenUT4M"].includes(d)){return d;};
+    }
+    // else{
+    //   return [];
+    // }
+  });
+}
+
 function update_graph_2(){
   data = graph2.data.slice(graph2.min_slice, graph2.max_slice + 1);
 
-  var keys = graph2.allcolumns;//filter_cat(filter_gender(graph2.allcolumns));
+  var keys = filter_race(graph2.allcolumns);
   console.log("keys: " + keys);
   console.log(data);
 
@@ -329,31 +354,31 @@ function update_graph_2(){
       .enter().append("rect")
         //tooltip
         // TODO: IMPORTANT CHECK WHY THIS IS NOT NICE!!! VERY IMPORTANT!!!
-        .on("mouseover", function(d) {
-
-          // TODO: update the text based on filters
-          var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
-          text += "Espoir Men: " + d.data.ESH + "<br>";
-          text += "Espoir Women: " + d.data.ESF + "<br>";
-
-          text += "</span>";
-          console.log(graph2.graph.style("top"));
-
-          // TODO: REDOX factorize offset and change chart name
-          tooltipx = d3.select("#tooltip-chart-1");
-          tooltipx
-            .style("opacity", 0.8)
-            .style("left", (d3.event.pageX - graph2.offset.left) + "px")
-            .style("top", (d3.event.pageY - graph2.offset.top) + "px")
-            .html(text);
-          console.log("on mouse in");
-        })
-        .on("mouseout", function(d) {
-          tooltipx = d3.select("#tooltip-chart-1");
-          tooltipx
-            .style("opacity", 0);
-          console.log("on mouse out");
-        })
+        // .on("mouseover", function(d) {
+        //
+        //   // TODO: update the text based on filters
+        //   var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
+        //   text += "Espoir Men: " + d.data.ESH + "<br>";
+        //   text += "Espoir Women: " + d.data.ESF + "<br>";
+        //
+        //   text += "</span>";
+        //   console.log(graph2.graph.style("top"));
+        //
+        //   // TODO: REDOX factorize offset and change chart name
+        //   tooltipx = d3.select("#tooltip-chart-1");
+        //   tooltipx
+        //     .style("opacity", 0.8)
+        //     .style("left", (d3.event.pageX - graph2.offset.left) + "px")
+        //     .style("top", (d3.event.pageY - graph2.offset.top) + "px")
+        //     .html(text);
+        //   console.log("on mouse in");
+        // })
+        // .on("mouseout", function(d) {
+        //   tooltipx = d3.select("#tooltip-chart-1");
+        //   tooltipx
+        //     .style("opacity", 0);
+        //   console.log("on mouse out");
+        // })
         //setup transition
         .attr("y", graph2.scales.y(0))
         .attr("height", 0)
