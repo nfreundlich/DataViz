@@ -260,7 +260,7 @@ read_data_graph_2('occ_ut4m_2017_simple_cropped');
 //   return text;
 // };
 
-// Race select group
+// Filter on Race
 $('#checkRaceOCC').change(function(){
   console.log("OCC:" + $('#checkRaceOCC').prop("checked"));
   update_graph_2();
@@ -283,16 +283,39 @@ function filter_race(columns)
     if (raceUT4M) {
       if(["WomenUT4M", "MenUT4M"].includes(d)){return d;};
     }
-    // else{
-    //   return [];
-    // }
   });
 }
+
+// Filter on Gender
+$('#checkGenderWomen').change(function(){
+  console.log("Women:" + $('#checkGenderWomen').prop("checked"));
+  update_graph_2();
+});
+$('#checkGenderMen').change(function(){
+  console.log("Men:" + $('#checkGenderMen').prop("checked"));
+  update_graph_2();
+});
+function filter_gender_graph2(columns)
+{
+  console.log("Filter on gender");
+  genderWomen = $('#checkGenderWomen').prop("checked");
+  genderMen = $('#checkGenderMen').prop("checked");
+
+  return columns.filter(function(d){
+    if(genderWomen){
+      if (["WomenOCC", "WomenUT4M"].includes(d)){return d;};
+    }
+    if (genderMen) {
+      if(["MenOCC", "MenUT4M"].includes(d)){return d;};
+    }
+  });
+}
+
 
 function update_graph_2(){
   data = graph2.data.slice(graph2.min_slice, graph2.max_slice + 1);
 
-  var keys = filter_race(graph2.allcolumns);
+  var keys = filter_gender_graph2(filter_race(graph2.allcolumns));
   console.log("keys: " + keys);
   console.log(data);
 
