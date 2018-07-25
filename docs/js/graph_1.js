@@ -299,18 +299,6 @@ function update_graph1(){
 	var t = d3.transition().duration(250);
   var rects = g_graph_1;
 
-//TODO: REDOX ---->>>TOOLTIP
-  var tip = d3.tip().attr("class", "d3-tip")
-        .html(function(d){
-          var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
-          text += "Women: " + d.data.Women + "<br>";
-          text += "Men: " + d.data.Men + "<br></span>";
-          return text;
-        });
-
-  rects.call(tip);
-//<<-----TOOLTIP
-
 //--->>> GRAPH
     //Remove old elements.
     //TODO: REDOX
@@ -336,17 +324,20 @@ function update_graph1(){
         .on("mouseover", function(d) {
 
           // TODO: update the text based on filters
-          var text = "<span style='font-size: 11px'>Total: " + d.data.Total + "<br>";
-          text += "Espoir Men: " + d.data.ESH + "<br>";
-          text += "Espoir Women: " + d.data.ESF + "<br>";
-
+          var text = "<span style='font-size: 10px'>Total: " + d.data.Total + "<br>";
+          text += "Espoir Men: <strong>" + d.data.ESH + "</strong>, Espoir Women: <strong>" + d.data.ESF + "</strong><br>";
+          text += "Senior Men: <strong>" + d.data.SEH + "</strong>, Senior Women: <strong>" + d.data.SEF + "</strong><br>";
+          text += "Vet1 Men: <strong>" + d.data.V1H + "</strong>, Vet1 Women: <strong>" + d.data.V1F + "</strong><br>";
+          text += "Vet2 Men: <strong>" + d.data.V2H + "</strong>, Vet2 Women: <strong>" + d.data.V2F + "</strong><br>";
+          text += "Vet3 Men: <strong>" + d.data.V3H + "</strong>, Vet3 Women: <strong>" + d.data.V3F + "</strong><br>";
+          text += "Vet4 Men: <strong>" + d.data.V4H + "</strong>, Vet4 Women: <strong>" + d.data.V4F + "</strong><br>";
           text += "</span>";
           console.log(g_graph_1.style("top"));
 
           // TODO: REDOX factorize offset and change chart name
           tooltipx = d3.select("#tooltip-chart-1");
           tooltipx
-            .style("opacity", 0.8)
+            .style("opacity", 0.9)
             .style("left", (d3.event.pageX - g1_params.offset.left) + "px")
             .style("top", (d3.event.pageY - g1_params.offset.top) + "px")
             .html(text);
@@ -363,7 +354,6 @@ function update_graph1(){
         .attr("height", 0)
         .attr("x", function(d){ return x(d.data.TimeBin) })
         .attr("width", x.bandwidth())
-
 
         //start transition
         .transition(t)
