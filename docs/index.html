@@ -84,13 +84,14 @@
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
-              <strong>Analyzing OCC Trail Running Competition</strong>
+              <strong>Analysis of the OCC Trail Running Competition</strong>
             </h1>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5">We'll be analyzing in detail the OCC trail running competition finsher times, then compare its difficulty with other similar competitions.</p>
-            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#thestory">Check the Story</a>
+            <p class="text-faded mb-5">We'll be analyzing in detail the OCC trail running competition finsher times, then compare them with the UT4M similar competition.</p>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#thestory">The Story</a>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" data-toggle="modal" data-target="#modalAboutTheVisualization">About the Visualization</a>
           </div>
         </div>
       </div>
@@ -103,21 +104,17 @@
         <div class="row">
           <div class="col-lg-10 mx-auto text-center">
             <h2 class="section-heading text-white">The Story</h2>
-            <p class="text-faded mb-5" style="text-align:left; font-size:11px;">
+            <p class="text-faded mb-5" style="text-align:left; font-size:14px;">
               <br />
-              Long distance running might be somehow surprizing - especially if the terrain is unknown, as in trail running competitions. While preparing for a race, it would be interesting to have an idea of distribution of arrival times to estimate the difficulty to be expected.<br>
+              Long distance running might be somehow surprizing - especially if the terrain is unknown, as in trail running competitions. While preparing for a race, it would be interesting to have an idea of the distribution of arrival times to estimate the difficulty to be expected.
+              <br><br>
+              It happens that the same race accepts slight changes from edition to edition, and it would be also useful to have an overview of these changes and how do they affect the arrival times. <br><br>
 
-              It happens that the same race accepts slight changes from edition to edition, and it would be also useful to have an overview of these changes and how do they affect the arrival times. <br>
+              Amateur atheletes are often aware of the elite arrival times, but the information regarding the estimated arrival of 'somebody like them' is rarely known. Moreover, comparing the arrival distribution of a new race to one which they have already run, could refine the expectations of effort. <br><br>
 
-              Amateur atheletes are often aware of the elite arrival times, but the information regarding the estimated arrival of 'somebody like them' is rarely known. <br>
+              On the other hand, race organizers, especially if they are experienced, have a feeling about rush hours and empty hours. But do they have a scientific way to estimate arrival times? For races lasting from 3 to 7 days, optimizing the organization of supplies and medical staff is crucial. <br><br>
 
-              Moreover, comparing the arrival distribution of a new race to one which they have already run, could refine the expectations of effort. <br>
-
-              On the other hand, race organizers, especially if they are experienced, have a feeling about rush hours and empty hours. But do they have a scientific way to estimate arrival times? For races lasting from 3 to 7 days, optimizing the organization of supplies and medical staff is crucial. <br>
-
-              This is what the current visualization project wishes to address: analyze a race in detail (OCC, taking place in Chamonix, part of UTMB competition) and provide a comparison with UT4M trail (similar distance run in Grenoble).<br>
-
-              I chose to use an interactive slideshow approach, introducing the user the key elements of each scene, then allowing free manipulation of the graphs. <br>
+              This is what the current visualization project wishes to address: analyze a race in detail (OCC, taking place in Chamonix, part of UTMB competition) and provide a comparison with UT4M Chartreuse, Vercors and Belledonne Trails (similar distance runs in Grenoble).<br><br>
             </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#occ">Continue to OCC</a>
           </div>
@@ -135,14 +132,26 @@
           </div>
         </div>
         <div class="row">
-          <p class="text-primary mb-5" style="text-align:left; font-size:11px;">
+          <p class="text-primary mb-5" style="text-align:left; font-size:12px;">
+            <br>
+            In order to understand the difficulty of a race (OCC here), a runner might ask some questions - apart the traditional "type, distance, elevation gain".<br>
+
             - What is the distribution of arrival times for the OCC Trail running competition?<br>
             - How does this distribution vary based on gender, age, year of edition?<br>
-            - How did the average running times evolve for OCC between 2014-2017?<br />
+            - How did the average running times evolve for OCC between 2014-2017?<br>
 
-          <br /> <br /> The graphs and their interpretation<br /> <strong>A) OCC 2014 - 2017 Analysis (histogram)</strong><br />
-            - X axis - duration of the run (15' bins) / Y axis - number of runners in the interval<br /> - Color coding: a main color palette (green/yellow) to highlight the difference between male/female atheletes; secondary color palette (shades ) is used to highlight various age cathegories<br /> - Analysis: consistently more male runners than female runners; male running time is slightly faster than female running time (appx 30' )<br /><br /><strong> A') OCC 2014 - 2017 Average running time evolution</strong><br /> - X Axis: years from 2014 - 2017 / Y Axis: average running time in minutes<br /> - Remark: I chose a line graph for this discreet measure to suggest the evolution of the averages, in a 'trend line' approach<br /> - Analysis: an interesting discovery - the average run times considering all runner cathegories, vary only by 3 min (0.5%) in four years.<br /><br />
-            </p>
+            <br>
+
+            <strong>OCC 2014 - 2017 Analysis (histogram)</strong>
+            <br>We notice that there the distribution presents a familiar bell shape, consistent for each edition, for both male and female atheletes and for all age groups. Some age groups (Espoir, Vet3 and Vet4) do not have sufficient runners to allow any conclusion. There are consistently more male runners than female runners, and male running time is slightly faster than female running time (appx 30' )<br><br>
+
+            <strong>OCC 2014 - 2017 Average running time evolution</strong><br>
+            The race, though presenting slight variations in distance and elevation gain through the years, has maintained a relatively consistent finiher time distribution.<br><br>
+
+            <strong>Play with the graph</strong><br>
+            You can use the controls on the right side to navigate through various editions and filter on specific cathegories. If you wish to highlight a specific arrival interval, use the double slider filtering on arrival times.
+          </p>
+
         </div>
 
         <div class="row">
@@ -225,10 +234,17 @@
         </div>
         <div class = "row">
           <p class="text-primary mb-5" style="text-align:left; font-size:11px;">
-                - How do the mean times from OCC compare to a similar cathegory trail (UT4M Chartreuse 2017)?<br />
+            <br>
+            <strong>How is the distribution of finiher times of OCC compare to another race?</strong>
+            <br>
+            We take as an example the UTM4 2017 race series, presenting a similar distance and elevation gain.
+            <br>
+            We notice that the arrival times are consistently faster in the latter race, suggesting that it is noticeably 'easier' than the OCC.
+            <br>
+            Remark: This analysis does not consider individual runners, and it might be interesting to compare ITRA classification of competing atheletes.<br><br>
 
-                <strong>B) OCC vs UT4M comparison (histogram)</strong><br /> - X &amp; Y axis: similar to A) graph<br /> - Color coding: a main color palette (blue/orange) for differentiating between OCC/UT4M; secondary color palette (shades) for less important differentiation btw cathegories<br />
-               - Analysis: OCC presents a significanlty higher effort than UT4M (a difference of appx 3h on average)<br /><br />
+            <strong>Play with the graph</strong><br>
+            Using the filters on the right side, you can select the races to be displayed, filtering further on genders.
           </p>
         </div>
         <div class="row">
@@ -248,9 +264,21 @@
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="checkRaceUT4M" checked>
-                <label class="form-check-label" for="checkRaceUT4M">
-                  UT4M
+                <input class="form-check-input" type="checkbox" value="" id="checkRaceUT4MChartreuse" checked>
+                <label class="form-check-label" for="checkRaceUT4MChartreuse">
+                  UT4M Chart.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkRaceUT4MVercors" checked>
+                <label class="form-check-label" for="checkRaceUT4MVercors">
+                  UT4M Vercors
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkRaceUT4MBelledonne" checked>
+                <label class="form-check-label" for="checkRaceUT4MBelledonne">
+                  UT4M Belled.
                 </label>
               </div>
             </div>
@@ -270,6 +298,11 @@
                 </label>
               </div>
             </div>
+
+            <div class="">
+              <button id="button-reset-graph-2" class="btn btn-secondary">Reset</button>
+            </div>
+
           </div>
         </div>
         <div class="col-lg-12 text-center">
@@ -290,13 +323,6 @@
             <p class="text-faded mb-4" style="text-align:left; font-size:12px;">
               - This analysis might be useful to evaluate one's expected completion time in a specific competition based on previous experiences (ex in our case: expected OCC after UT4M)<br />
               - Further investigation might be possible - adding other competitions to the comparison, considering specific distances, elevation gains, terrain etc. <br />
-              - Some more text <br />
-              - Some more text <br />
-              - Some more text <br />
-              - Some more text <br />
-              - Some more text <br />
-              - Some more text <br />
-              - Some more text <br />
             </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#references">References</a>
           </div>
@@ -314,24 +340,19 @@
             <hr class="my-4">
             <p class="mb-5" style="text-align:left; font-size:12px;">
               <em>Data sources:</em><br />
-                - UT4M: https://ut4m.fr/fr/courses/resultats <br>
-                - UTMB/OCC: http://utmbmontblanc.com/en/page/107/107.html<br />
-              <br />
-              <em> Data prep:</em><br />
+              - <a target="_blank" rel="noopener noreferrer" href="https://ut4m.fr/fr/courses/resultats"> UT4M Results</a><br>
+              - <a target="_blank" rel="noopener noreferrer" href="http://utmbmontblanc.com/en/page/107/107.html">UTMB/OCC Results</a><br>
+              <br>
+              <em>Data preparaing:</em><br>
                 - Downloaded, cleaned and concatenated the yearly results <br>
                 - Python used to clean data formatting issues<br>
-                - Python with Pandas used to create the time bins / histograms. I have decided to perform the data prep part on python side wherever possible, to facilitate manipulation on in JS<br>
-              <br />
-              <em> External resources:</em><br />
-                - Bootstrap, used for site navigation <br>
-                - Creative one-page design, for single page design template<br>
-                - Udemy D3 training <br>
-                - Examples from http://bl.ocks.org<br>
-              <br />
-              <em> Some tech choices:</em><br />
-                - Since we have several graphs on a single page, each graph has its own list of parameters in a dedicated structure.<br>
-                - Whenever possible I have tried to use a declarative approach
-                - For the stacked bar charts, I have taken inspiration from the following design http://bl.ocks.org<br>
+                - Python with Pandas used to create the time bins / histograms. Performed the data prep part on python side wherever possible, to facilitate manipulation in js<br>
+              <br>
+              <em>Resources:</em><br />
+                - <a target="_blank" rel="noopener noreferrer" href="https://getbootstrap.com/">Bootstrap</a><br>
+                - <a target="_blank" rel="noopener noreferrer"  href="https://blackrockdigital.github.io/startbootstrap-creative/">Creative one-page design, for single page design template</a><br>
+                - <a target="_blank" rel="noopener noreferrer" href="https://www.udemy.com/masteringd3js/">Udemy D3 details</a><br>
+                - <a target="_blank" rel="noopener noreferrer" href="http://bl.ocks.org">Chart examples at bl.ocks.org</a><br>
               <br />
             </p>
           </div>
@@ -339,6 +360,78 @@
       </div>
     </section>
     <!-- end of references section -->
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="modalAboutTheVisualization" tabindex="-1" role="dialog" aria-labelledby="modalAboutTheVisualizationTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAboutTheVisualizationTitle">ABOUT THE VISUALIZATION</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Narrative structure and scenes</h4>
+
+            <br>
+
+            This visualization aims to analyze the results of several trail running races, with a special focus on the OCC competition.
+
+            The user follows the story, being allowed to highlight specific aspects of the data on one static and two interactive scenes.
+
+            <br><br>
+
+            First, he is introduced to the subject ("About the Story") and the problems addressed by the project. In the second scene ("OCC") the user is presented a detailed view of the OCC competition, between 2014 - 2017; at this stage, several filtering actions are possible. The story continues to a comparison between OCC 2017 and anoter similar race, UT4M ("Comparison"); also in this view, user interaction is allowed.
+
+            <br><br>
+
+            The presentation ends with a cunclusion and technical details.
+
+            <br><br>
+
+            <h4>Annotations</h4>
+
+            <br>
+            Annotations are used to provide information for the analysis of the OCC race through various years. Since there are slight distance and elevation gain differences between several editions, when triggered by the 'year selection slider', the information related to the selected year is displayed.
+
+            <br><br>
+
+            <h4>Parameters and triggers</h4>
+
+            <br>
+
+            The user is allowed to control various parameters in the first dynamic scene ("OCC"). Changing of "Year" slider triggers an update of the race results and the associated annotation. For each edition, the used can filter results on the Gender and Age group of the participants. Furthermore, he can filter on arrival times to have a better view on specific chunks of the results.<br><br>
+
+            The html elements used at this stage are sliders (simple and double) and dropdown lists.
+
+            <br><br>
+
+            For the second dynamic scene ("Comparison"), the user is allowed to filter the races added to the comparison and the gender of the participants.
+
+            <br><br>
+
+            The html elements used in this section are checkboxes.
+
+            <br><br>
+
+            <h4>Visual choices</h4>
+            <br>
+            <ul>
+              <li>The visualization uses stacked bar charts, to present the race results as a distribution.</li>
+              <li>A paired color scheme is used; the main color palette represents age groups (OCC) and races (Comparison), and the secondary color palette (shades) is used to emphasize runners' gender. </li>
+              <li>All axis are linear; X axis - duration of the run (15' bins) and Y axis - number of runners in the 15' interval time bins.</li>
+              <li>The axis are 'OCC' adapting dynamically to filters, thus allowing a focus on specific details. For the 'Comparison' scene, the axis are static, thus consistently presenting the selected races in their context.</li>
+            </ul>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

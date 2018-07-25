@@ -244,10 +244,10 @@ function create_annotation_g1(year){
   var distance = 0;
   var uphill = 0;
 
-  if(year == 2014){distance = 44.5; uphill = 2100;}
-  if(year == 2015){distance = 45; uphill = 2600;}
-  if(year == 2016){distance = 47; uphill = 2500;}
-  if(year == 2017){distance = 43; uphill = 2700;}
+  if(year == 2014){distance = 53; uphill = 'n/a ';}
+  if(year == 2015){distance = 53; uphill = 3200;}
+  if(year == 2016){distance = 55; uphill = 3400;}
+  if(year == 2017){distance = 55; uphill = 3500;}
 
   text = " Distance: " + distance + "km<br> Elevation gain: "+ uphill + "m";
   return text;

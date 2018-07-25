@@ -105,7 +105,7 @@ function read_data_graph_2(competition){
       graph2[competition] = data;
 
       // default
-      if(competition == 'occ_ut4m_2017_simple_cropped'){
+      if(competition == 'occ_ut4m_2017'){
         graph2.data = graph2[competition];
         console.log(graph2.data);
         graph2.filtered = graph2.data['columns'].slice(2);
@@ -130,84 +130,26 @@ function read_data_graph_2(competition){
   });
 }
 
-read_data_graph_2('occ_ut4m_2017_simple_cropped');
+read_data_graph_2('occ_ut4m_2017');
 
-// //ESH,ESF,SEH,SEF,V1H,V1F,V2H,V2F,V3H,V3F,V4H,V4F
-// $("#play-button-graph-1-2017") //age filter test temp
-//     .on("click", function(){
-//       console.log(graph2.data.slice(3,8));
-//       graph2.data = graph2.data.slice(3,8)
-//
-//       update_graph_2();
-//     });
-// $("#button-reset")
-//     .on("click", function(){
-//       graph2.filtered = graph2.allcolumns;
-//       graph2.data = graph2.occ_ut4m_2017_simple_cropped;
-//       graph2.min_slice = 0;
-//       graph2.max_slice = 41;
-//       $("#occ-gender-select").val("occ_gender_all");
-//       $("#occ-cat-select").val("occ_cat_all");
-//       update_graph_2();
-//     });
-// $("#occ-gender-select")
-//     .on("change", function(){
-//         update_graph_2();
-//     });
-// $("#occ-cat-select")
-//     .on("change", function(){
-//         update_graph_2();
-//     });
-//
-// //gender -- cat
-// function filter_gender(columns)
-// {
-//   gender = $("#occ-gender-select").val();
-//   console.log('Filter on gender: ' + gender);
-//
-//   // TODO: REDOX - apply cleaner mapping, eg:
-//   // filteredDistances = distances.filter(item => item.distance < 10000)
-//   // graph2.allcolumns.filter(item => oo);
-//
-//   return columns.filter(function(d){
-//     if(gender == "occ_gender_women"){
-//       if (["ESF", "SEF", "V1F", "V2F", "V3F", "V4F"].includes(d)){return d;};
-//     }
-//     else if (gender == "occ_gender_men") {
-//       if(["ESH", "SEH", "V1H", "V2H", "V3H", "V4H"].includes(d)){return d;};
-//     }
-//     else{
-//       return columns;
-//     }
-//   });
-// }
-// function filter_cat(columns)
-// {
-//   var cat = $("#occ-cat-select").val();
-//   return columns.filter(function(d){
-//     if(cat == "occ_cat_es"){
-//       if(["ESF", "ESH"].includes(d)){return d;};
-//     }
-//     else if (cat == "occ_cat_se") {
-//       if(["SEF", "SEH"].includes(d)){return d;};
-//     }
-//     else if (cat == "occ_cat_ve1") {
-//       if(["V1F", "V1H"].includes(d)){return d;};
-//     }
-//     else if (cat == "occ_cat_ve2") {
-//       if(["V2F", "V2H"].includes(d)){return d;};
-//     }
-//     else if (cat == "occ_cat_ve3") {
-//       if(["V3F", "V3H"].includes(d)){return d;};
-//     }
-//     else if (cat == "occ_cat_ve4") {
-//       if(["V4F", "V4H"].includes(d)){return d;};
-//     }
-//     else{
-//       return columns;
-//     }
-//   });
-// }
+$("#button-reset-graph-2")
+    .on("click", function(){
+      graph2.filtered = graph2.allcolumns;
+      graph2.min_slice = 0;
+      graph2.max_slice = 46;
+
+      //select all races
+      $('#checkRaceOCC').prop("checked", true);
+      $('#checkRaceUT4MChartreuse').prop("checked", true);
+      $('#checkRaceUT4MVercors').prop("checked", true);
+      $('#checkRaceUT4MBelledonne').prop("checked", true);
+
+      //select all genders
+      $('#checkGenderWomen').prop("checked", true);
+      $('#checkGenderMen').prop("checked", true);
+
+      update_graph_2();
+    });
 
 // $("#date-slider").slider({
 //     max: 2017,
@@ -265,23 +207,39 @@ $('#checkRaceOCC').change(function(){
   console.log("OCC:" + $('#checkRaceOCC').prop("checked"));
   update_graph_2();
 });
-$('#checkRaceUT4M').change(function(){
-  console.log("UT4M:" + $('#checkRaceUT4M').prop("checked"));
+$('#checkRaceUT4MChartreuse').change(function(){
+  console.log("UT4M Chartreuse:" + $('#checkRaceUT4MChartreuse').prop("checked"));
+  update_graph_2();
+});
+$('#checkRaceUT4MVercors').change(function(){
+  console.log("UT4M Vercors:" + $('#checkRaceUT4MVercors').prop("checked"));
+  update_graph_2();
+});
+$('#checkRaceUT4MBelledonne').change(function(){
+  console.log("UT4M Belledonne:" + $('#checkRaceUT4MBelledonne').prop("checked"));
   update_graph_2();
 });
 
 function filter_race(columns)
 {
-  console.log("Filter on race");
   raceOCC = $('#checkRaceOCC').prop("checked");
-  raceUT4M = $('#checkRaceUT4M').prop("checked");
+  raceUT4M = $('#checkRaceUT4MChartreuse').prop("checked");
+  raceUT4MVercors = $('#checkRaceUT4MVercors').prop("checked");
+  raceUT4MBelledonne = $('#checkRaceUT4MBelledonne').prop("checked");
 
+  console.log("Filter on race: " + raceOCC + ", " + raceUT4M + ", " + raceUT4MVercors);
   return columns.filter(function(d){
     if(raceOCC){
       if (["WomenOCC", "MenOCC"].includes(d)){return d;};
     }
     if (raceUT4M) {
-      if(["WomenUT4M", "MenUT4M"].includes(d)){return d;};
+      if(["WomenUT4M_CH", "MenUT4M_CH"].includes(d)){return d;};
+    }
+    if (raceUT4MVercors) {
+      if(["WomenUT4M_VE", "MenUT4M_VE"].includes(d)){return d;};
+    }
+    if (raceUT4MBelledonne) {
+      if(["WomenUT4M_BE", "MenUT4M_BE"].includes(d)){return d;};
     }
   });
 }
@@ -295,6 +253,7 @@ $('#checkGenderMen').change(function(){
   console.log("Men:" + $('#checkGenderMen').prop("checked"));
   update_graph_2();
 });
+
 function filter_gender_graph2(columns)
 {
   console.log("Filter on gender");
@@ -303,10 +262,10 @@ function filter_gender_graph2(columns)
 
   return columns.filter(function(d){
     if(genderWomen){
-      if (["WomenOCC", "WomenUT4M"].includes(d)){return d;};
+      if (["WomenOCC", "WomenUT4M_CH", "WomenUT4M_VE", "WomenUT4M_BE"].includes(d)){return d;};
     }
     if (genderMen) {
-      if(["MenOCC", "MenUT4M"].includes(d)){return d;};
+      if(["MenOCC", "MenUT4M_CH", "MenUT4M_VE", "MenUT4M_BE"].includes(d)){return d;};
     }
   });
 }
@@ -423,8 +382,12 @@ function graph_2_legend()
   var cathegory_text = [
     "OCC, W",
     "OCC, M",
-    "UT4M, W",
-    "UT4M, M",
+    "UT4M Cha., W",
+    "UT4M Cha., M",
+    "UT4M Verc., W",
+    "UT4M Verc., M",
+    "UT4M Bell., W",
+    "UT4M Bell., M",
   ];
   graph2.scales.color = d3.scaleOrdinal(d3["schemePaired"]).domain(cathegory_text);//graph2.allcolumns);
 
