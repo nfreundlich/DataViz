@@ -8,7 +8,7 @@ var graph2 = {
 
                   //dimensions
                   dimensions: { width:0, height:0 },
-                  margin: { left:80, right:60, top:60, bottom:160 },
+                  margin: { left:80, right:60, top:60, bottom:100 },
 
                   //graph
                   graph:'',
